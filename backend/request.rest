@@ -1,0 +1,80 @@
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "name": "asad",
+    "email": "admin@gmail.com",
+    "password": "123456",
+    "confPassword": "123456",
+    "role": "user"
+}
+
+
+###
+// get all users
+GET http://localhost:5000/users
+
+###
+//Get Single User
+GET http://localhost:5000/users/78dd2e92-531a-4035-82a2-ca4984124271
+
+###
+//Update a User
+PATCH  http://localhost:5000/users/78dd2e92-531a-4035-82a2-ca4984124271
+Content-Type: application/json
+
+{
+    "name": "John Updated",
+    "email": "joen@gmail.com",
+    "password": "",
+    "confPassword": "",
+    "role": "user"
+}   
+
+###
+// Login User
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "123456"
+}
+###
+GET  http://localhost:5000/me
+
+###
+DELETE  http://localhost:5000/logout
+
+###
+//Get All Product
+GET http://localhost:5000/products
+
+###
+//Get Single Product
+GET http://localhost:5000/products/861eafba-5f5f-4763-8514-197db867e11b
+
+###
+// POST Data Product
+POST http://localhost:5000/products
+Content-Type: application/json
+
+{
+    "name": "Product 5",
+    "price": 999
+}
+
+###
+// PATCH Data Product
+PATCH http://localhost:5000/products/861eafba-5f5f-4763-8514-197db867e11b
+Content-Type: application/json
+
+{
+    "name": "Product Updated",
+    "price": 974
+}
+
+###
+// Deleted Product
+
+DELETE http://localhost:5000/products/861eafba-5f5f-4763-8514-197db867e11b
