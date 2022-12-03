@@ -55,7 +55,7 @@ const Userlist= () => {
                   onClick={() => deleteUser(user.uuid)}
                   className="button is-small is-danger"
                 >
-                  Delete
+                  Delete User
                 </button>
               </td>
             </tr>
