@@ -1,40 +1,79 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { IoHome, IoPerson, IoPricetag, IoLogOut} from "react-icons/io5";
-
+import {
+  IoHome,
+  IoPerson,
+  IoPricetag,
+  IoLogOut,
+  IoReader,
+  IoAnalytics,
+} from "react-icons/io5";
+import { LogOut, reset } from "../features/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Sidebar = () => {
-  return (
-    <div><aside className="menu pl-5 has-shadow">
-    <p className="menu-label">
-      General
-    </p>
-    <ul className="menu-list">
-      <li>
-        <NavLink to={"/dashboard"}><IoHome/> Dashboard</NavLink>
-      </li>
-      <li>
-        <NavLink to={"/products"}><IoPricetag/> products</NavLink>
-      </li>
-    </ul>
-    <p className="menu-label">
-      Admin
-    </p>
-    <ul className="menu-list">
-      <li>
-        <NavLink to={"/users"}> <IoPerson/> Users</NavLink>
-      </li>
-    </ul>
-    <p className="menu-label">
-      Settings
-    </p>
-    <ul className="menu-list">
-      <li>
-        <button className="button is-white"><IoLogOut/> Logout</button>
-      </li>
-    </ul>
-  </aside></div>
-  )
-}
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-export default Sidebar
+  const logout = () => {
+    dispatch(LogOut());
+    dispatch(reset());
+    navigate("/");
+  };
+  return (
+    <div className="has-navbar-fixed-top">
+      <aside className="menu pl-5 has-shadow has-navbar-fixed-top">
+        <p className="menu-label">General</p>
+        <ul className="menu-list">
+          <li>
+            <NavLink to={"/dashboard"}>
+              <IoHome /> Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"/utilitycost"}>
+              <IoAnalytics /> Utility Cost
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"/products"}>
+              <IoPricetag /> products
+            </NavLink>
+          </li>
+        </ul>
+        <p className="menu-label">Admin</p>
+        <ul className="menu-list">
+          <li>
+            <NavLink to={"/users"}>
+              {" "}
+              <IoPerson /> Users
+            </NavLink>
+            <NavLink to={"/formaddtonase"}>
+              <IoReader /> Input Tonase
+            </NavLink>
+            <NavLink to={"/inpututility"}>
+              <IoReader /> Input Utility
+            </NavLink>
+            <NavLink to={"/inputpv"}>
+              <IoReader /> Input PV
+            </NavLink>
+            <NavLink to={"/reporthour"}>
+              <IoReader /> Report per Jam
+            </NavLink>
+          </li>
+        </ul>
+        <p className="menu-label">Settings</p>
+        <ul className="menu-list">
+          <li>
+            <button className="button is-white" onClick={logout}>
+              <IoLogOut /> Logout
+            </button>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  );
+};
+
+export default Sidebar;

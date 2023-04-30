@@ -1,0 +1,17 @@
+.blink {
+  animation: blinker 3.75s linear infinite;
+  font-family: sans-serif;
+}
+@keyframes blinker {
+  10% {
+    opacity: 0;
+  }
+}
+
+.clock {
+  transform: translateX(-50%) translateY(-50%);
+  color: #17d4fe;
+  font-size: 30px;
+  font-family: Orbitron;
+  letter-spacing: 7px;
+}

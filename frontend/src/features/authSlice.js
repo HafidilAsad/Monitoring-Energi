@@ -26,6 +26,9 @@ export const LoginUser = createAsyncThunk("User/LoginUser", async(user, thunkAPI
         
     }
 });
+export const LogOut = createAsyncThunk("user/LogOut", async() => {
+    await axios.delete('http://localhost:5000/logout');
+});
 
 export const authSlice = createSlice ({
     name: "auth",
@@ -49,6 +52,7 @@ export const authSlice = createSlice ({
         })
     }
 })
+
 
 export const {reset} = authSlice.actions;
 export default authSlice.reducer;
