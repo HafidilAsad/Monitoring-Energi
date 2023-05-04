@@ -50,7 +50,7 @@ const ChartStriko1 = () => {
       <LineChart
         width={600}
         height={300}
-        data={gasConsumptionData.slice(-80)}
+        data={gasConsumptionData.slice(-16)}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
         <XAxis dataKey="createdAt" tick={{ fontSize: 10 }} />

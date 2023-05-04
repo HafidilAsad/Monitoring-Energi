@@ -12,9 +12,46 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const GasConsumption = () => {
+  const [gas_kemarin, setGas_kemarin] = useState([]);
   const [sensor, setSensor] = useState([]);
+  const [Yesterday, setYesterday] = useState([]);
+  const [UsedYesterday, setUsedYesterday] = useState([]);
 
-  //mengambil data realtime dari sensor
+  //Coba dulu Aja
+  useEffect(() => {
+    const fetchUsedYesterdayData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/reportsconsumptkemarin"
+        );
+        const usedyesterdayData = response.data.map((item) => item.gas_used);
+        setUsedYesterday(usedyesterdayData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    fetchUsedYesterdayData();
+  }, []);
+
+  //mengambil report data gas report M kubik
+  useEffect(() => {
+    const fetchYesterdayData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/reportsconsumptkemarin"
+        );
+        const yesterdayData = response.data.map((item) => item.gas_consumption);
+        setYesterday(yesterdayData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    fetchYesterdayData();
+  }, []);
+
+  //mengambil data realtime dari sensor=====================================================
   useEffect(() => {
     const getSensor = async () => {
       const result = await axios.get("http://localhost:5000/striko1s");
@@ -29,6 +66,23 @@ const GasConsumption = () => {
     // Membersihkan interval ketika komponen unmount
     return () => clearInterval(intervalId);
   }, []);
+
+  //Mengambil data gas sensor kemarin=========================================================
+  useEffect(() => {
+    getGas_kemarin();
+  }, []);
+
+  const getGas_kemarin = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/akhirharikemarin"
+      );
+      const gasConsumptions = response.data.map((gas) => gas.gas_consumption);
+      setGas_kemarin(gasConsumptions);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const percentage = 25;
   return (
@@ -162,31 +216,34 @@ const GasConsumption = () => {
                   Yesterday M³/Ton
                 </div>
                 <div className="card-content">
-                  <progress className="progress is-info" value="30" max="100">
-                    30%
-                  </progress>
-                  <div style={{ width: 50, height: 28 }}>
-                    <CircularProgressbar
-                      value={percentage}
-                      text={`${percentage}%`}
-                      styles={{
-                        path: {
-                          stroke: "#17a2b8", // change to info color
-                          strokeLinecap: "round",
-                          transition: "stroke-dashoffset 0.5s ease 0s",
-                        },
-                        trail: {
-                          stroke: "#d6d6d6",
-                          strokeLinecap: "round",
-                        },
-                        text: {
-                          fill: "#17a2b8", // change to info color
-                          fontSize: "20px",
-                          dominantBaseline: "middle",
-                          textAnchor: "middle",
-                        },
-                      }}
-                    />
+                  <div className="level">
+                    <span className="has-text-centered has-text-weight-bold pt-4">
+                      <br />
+                      {Yesterday} M³/Ton
+                    </span>
+                    <div style={{ width: 70, height: 62 }}>
+                      <CircularProgressbar
+                        value={percentage}
+                        text={`${percentage}%`}
+                        styles={{
+                          path: {
+                            stroke: "#17a2b8", // change to info color
+                            strokeLinecap: "round",
+                            transition: "stroke-dashoffset 0.5s ease 0s",
+                          },
+                          trail: {
+                            stroke: "#d6d6d6",
+                            strokeLinecap: "round",
+                          },
+                          text: {
+                            fill: "#17a2b8", // change to info color
+                            fontSize: "20px",
+                            dominantBaseline: "middle",
+                            textAnchor: "middle",
+                          },
+                        }}
+                      ></CircularProgressbar>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -202,14 +259,35 @@ const GasConsumption = () => {
                   </p>
                 </div>
                 <div className="card-content">
-                  <progress
-                    className="progress is-warning is-small"
-                    value="75"
-                    max="100"
-                  >
-                    75%
-                  </progress>
-                  <p className="is-size-5"> 1000</p>
+                  <div className="level">
+                    <span className="has-text-centered has-text-weight-bold pt-4">
+                      <br />
+                      {UsedYesterday} mmbtu
+                    </span>
+                    <div style={{ width: 70, height: 62 }}>
+                      {/* <CircularProgressbar
+                        value={percentage}
+                        text={`${percentage}%`}
+                        styles={{
+                          path: {
+                            stroke: "#17a2b8", // change to info color
+                            strokeLinecap: "round",
+                            transition: "stroke-dashoffset 0.5s ease 0s",
+                          },
+                          trail: {
+                            stroke: "#d6d6d6",
+                            strokeLinecap: "round",
+                          },
+                          text: {
+                            fill: "#17a2b8", // change to info color
+                            fontSize: "20px",
+                            dominantBaseline: "middle",
+                            textAnchor: "middle",
+                          },
+                        }}
+                      ></CircularProgressbar> */}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -297,7 +375,7 @@ const GasConsumption = () => {
                         <span className="has-text-centered has-text-weight-bold pt-4">
                           <br />
                           {(
-                            (item.gas_consumption - 10351) /
+                            (item.gas_consumption - gas_kemarin) /
                             27.2203879834687
                           ).toFixed(1)}{" "}
                           mmbtu
@@ -342,7 +420,7 @@ const GasConsumption = () => {
                     .map((item) => (
                       <progress
                         className="progress is-warning"
-                        value={item.gas_consumption - 10351}
+                        value={item.gas_consumption - gas_kemarin}
                         max="2000"
                       >
                         75%
@@ -352,7 +430,7 @@ const GasConsumption = () => {
                     .filter(({ id }) => id === 1)
                     .map((item) => (
                       <h1 className="is-size-6 has-text-weight-bold">
-                        {item.gas_consumption - 10351} M³
+                        {item.gas_consumption - gas_kemarin} M³
                       </h1>
                     ))}
                 </div>

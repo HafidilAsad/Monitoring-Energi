@@ -12,6 +12,7 @@
     "bulma-block-list": "^0.7.0",
     "chart.js": "^4.0.1",
     "css-loader": "^6.7.3",
+    "node-schedule": "^2.1.1",
     "postcss-loader": "^7.2.4",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.0.1",

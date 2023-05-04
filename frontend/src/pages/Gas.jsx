@@ -33,6 +33,26 @@ const Gas = () => {
     // Membersihkan interval ketika komponen unmount
     return () => clearInterval(intervalId);
   }, []); // Menambahkan array dependensi kosong
+
+  //Mengambil data gas_consumption kemarin
+  const [gas_kemarin, setGas_kemarin] = useState([]);
+
+  useEffect(() => {
+    const getGas_kemarin = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/akhirharikemarin"
+        );
+        const gasConsumptions = response.data.map((gas) => gas.gas_consumption);
+        setGas_kemarin(gasConsumptions);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getGas_kemarin();
+  }, []);
+
+  //console.log(gas_kemarin);
   return (
     <LayoutGas>
       <nav
@@ -192,7 +212,7 @@ const Gas = () => {
                   .filter(({ id }) => id === 1)
                   .map((item) => (
                     <span className="is-block has-text-centered">
-                      CONSUMPTION = {item.gas_consumption} M³
+                      CONSUMPTION = {item.gas_consumption - gas_kemarin} M³
                     </span>
                   ))}
               </p>

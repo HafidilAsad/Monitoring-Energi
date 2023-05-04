@@ -1,4 +1,22 @@
 import Report from "../models/ReportModel.js";
+import { Op } from "sequelize";
+
+export const getReportConsumptKemarin = async (req, res) => {
+  try {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const response = await Report.findAll({
+      where: {
+        createdAt: {
+          [Op.between]: [yesterday, new Date()],
+        },
+      },
+    });
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 let lastExecuted = null;
 
@@ -48,28 +66,6 @@ export const getReportById = async (req, res) => {
   }
 };
 
-//  export const deleteReport = async(req, res) =>{
-//      try {
-//          await Report.destroy({
-//              where:{
-//                  id: req.params.id
-//              }
-//          });
-//          res.status(200).json({msg: "Report Deleted"});
-//      } catch (error) {
-//          console.log(error.message);
-//      }
-//  }
-
-// export const createCost = async(req, res) =>{
-//     try {
-//         await User.create(req.body);
-//         res.status(201).json({msg: "User Created"});
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-
 export const updateReport = async (req, res) => {
   try {
     await Report.update(req.body, {
@@ -95,85 +91,3 @@ export const deleteReport = async (req, res) => {
     console.log(error.message);
   }
 };
-
-// export const createCost = async(req, res) =>{
-//     try {
-//         await User.create({
-//             where:{
-//                 id: req.params.id
-//             }
-//         });
-//         res.status(200).json({msg: "Cost Submited"});
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-
-// export const deleteUser = async(req, res) =>{
-//     try {
-//         await User.destroy({
-//             where:{
-//                 id: req.params.id
-//             }
-//         });
-//         res.status(200).json({msg: "User Deleted"});
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-// export const getReport = async(req, res) =>{
-//     try {
-//         const response = await Report.findAll();
-//         res.status(200).json(response);
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-
-// export const getReportById = async(req, res) =>{
-//     try {
-//         const response = await Report.findOne({
-//             where:{
-//                 id: req.params.id
-//             }
-//         });
-//         res.status(200).json(response);
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-
-// export const createUser = async(req, res) =>{
-//     try {
-//         await User.create(req.body);
-//         res.status(201).json({msg: "User Created"});
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-
-// export const updateUser = async(req, res) =>{
-//     try {
-//         await User.update(req.body,{
-//             where:{
-//                 id: req.params.id
-//             }
-//         });
-//         res.status(200).json({msg: "User Updated"});
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-
-// export const deleteUser = async(req, res) =>{
-//     try {
-//         await User.destroy({
-//             where:{
-//                 id: req.params.id
-//             }
-//         });
-//         res.status(200).json({msg: "User Deleted"});
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
