@@ -52,7 +52,7 @@ const Navbar = () => {
           <div className="navbar-center">
             <div className="navbar-item">
               <h3 className="has-text-centered is-size-4 has-text-weight-bold is-family-primary">
-                MONITORING ENERGI LISTRIK SDB
+                MONITORING ENERGI
               </h3>
             </div>
           </div>

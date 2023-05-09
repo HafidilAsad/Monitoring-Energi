@@ -3,19 +3,9 @@ import { Op } from "sequelize";
 
 export const getAkhirharikemarin = async (req, res) => {
   try {
-    const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
-
-    const startOfYesterday = new Date(startOfToday);
-    startOfYesterday.setDate(startOfToday.getDate() - 1);
-
     const response = await Akhirhari.findAll({
-      where: {
-        createdAt: {
-          [Op.gte]: startOfYesterday,
-          [Op.lt]: startOfToday,
-        },
-      },
+      order: [["createdAt", "DESC"]],
+      limit: 1,
     });
 
     res.status(200).json(response);

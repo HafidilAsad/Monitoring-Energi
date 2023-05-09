@@ -37,9 +37,21 @@ app.use(
     store: store,
     cookie: {
       secure: "auto",
+      maxAge: 3600000, // satu jam
     },
   })
 );
+
+cron.schedule("0 * * * *", async () => {
+  store.destroy({
+    where: {
+      expires: {
+        [Op.lt]: new Date(),
+      },
+    },
+  });
+});
+
 const whitelist = ["http://localhost:3000/"];
 app.use(cors());
 app.use(express.json());
@@ -59,7 +71,7 @@ app.listen(process.env.APP_PORT, () => {
   console.log("server up and running....");
 });
 
-const job = schedule.scheduleJob("6 13 * * *", async () => {
+const job = schedule.scheduleJob("8 16 * * *", async () => {
   let gas_kemarin = 0;
   try {
     const response = await axios.get("http://localhost:5000/akhirharikemarin");
@@ -70,16 +82,25 @@ const job = schedule.scheduleJob("6 13 * * *", async () => {
     return;
   }
 
+  const today = new Date().toISOString().slice(0, 10); // get current date in ISO format
+  const response = await axios.get(
+    "http://10.14.20.212:3551/api/lhpChargingStriko1"
+  );
+  const filteredData = response.data.filter((item) => item.tanggal === today);
+  const totalChargingStriko1 = filteredData[0].total_charging_rs;
+
   const gasUsedMentah = await getData();
   const gasUsed = gasUsedMentah - gas_kemarin;
   const namaMesin = "Striko 1";
-  const gasConsumption = (gasUsed / 12789) * 1000; //ngambil API LHP Charging http://10.14.20.212:3551/api/lhpChargingSwiftAsia
+  const gasConsumption = (gasUsed / totalChargingStriko1) * 1000; //ngambil API LHP Charging http://10.14.20.212:3551/api/lhpChargingSwiftAsia
   const roundedGasConsumption = gasConsumption.toFixed(1);
   const data = {
     nama_mesin: namaMesin,
     gas_used: gasUsed,
     gas_consumption: roundedGasConsumption,
   };
+
+  console.log(totalChargingStriko1);
 
   // Post the data
   try {

@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./App";
 import "bulma/css/bulma.css";
+import "bulma-calendar/dist/css/bulma-calendar.min.css";
 
 import axios from "axios";
 

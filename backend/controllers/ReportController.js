@@ -1,10 +1,38 @@
 import Report from "../models/ReportModel.js";
 import { Op } from "sequelize";
 
+export const getReportperbulanini = async (req, res) => {
+  try {
+    const startDate = new Date();
+    startDate.setDate(1); // set the start date of the current month
+    const endDate = new Date();
+
+    const response = await Report.findAll({
+      where: {
+        createdAt: {
+          [Op.between]: [startDate, endDate],
+        },
+      },
+    });
+
+    const gasConsumptionSum = response.reduce(
+      (sum, report) => sum + report.gas_used,
+      0
+    );
+
+    res.status(200).json({
+      data: response,
+      gasConsumptionSum,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export const getReportConsumptKemarin = async (req, res) => {
   try {
     const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setDate(yesterday.getDate() - 2);
     const response = await Report.findAll({
       where: {
         createdAt: {

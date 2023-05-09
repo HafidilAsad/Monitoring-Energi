@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 
-const ChartStriko1ConsumptionPerTon = () => {
+const ChartCostGas = () => {
   const [data2, setData2] = useState([]);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const ChartStriko1ConsumptionPerTon = () => {
               "en-GB",
               options
             ),
-            gas_consumption: item.gas_consumption,
+            gas_consumption: item.gas_used / 27.2,
           }))
         );
       })
@@ -39,11 +39,10 @@ const ChartStriko1ConsumptionPerTon = () => {
         console.log(error);
       });
   });
-
   return (
     <div>
-      <ResponsiveContainer width="100%" height={220}>
-        <BarChart data={data2.slice(-12)}>
+      <ResponsiveContainer width="100%" height={380}>
+        <BarChart data={data2}>
           <XAxis dataKey="tanggal" />
           <YAxis />
           <Bar
@@ -75,4 +74,4 @@ const ChartStriko1ConsumptionPerTon = () => {
   );
 };
 
-export default ChartStriko1ConsumptionPerTon;
+export default ChartCostGas;

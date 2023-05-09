@@ -16,6 +16,19 @@ const GasConsumption = () => {
   const [sensor, setSensor] = useState([]);
   const [Yesterday, setYesterday] = useState([]);
   const [UsedYesterday, setUsedYesterday] = useState([]);
+  const [consumpperbulanini, setConsumptionperbulanini] = useState(0);
+
+  //Ambil data perbulan ini
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/reportsperbulanini")
+      .then((response) => {
+        setConsumptionperbulanini(response.data.gasConsumptionSum);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 
   //Coba dulu Aja
   useEffect(() => {
@@ -32,7 +45,7 @@ const GasConsumption = () => {
     };
 
     fetchUsedYesterdayData();
-  }, []);
+  });
 
   //mengambil report data gas report M kubik
   useEffect(() => {
@@ -49,7 +62,7 @@ const GasConsumption = () => {
     };
 
     fetchYesterdayData();
-  }, []);
+  });
 
   //mengambil data realtime dari sensor=====================================================
   useEffect(() => {
@@ -84,6 +97,13 @@ const GasConsumption = () => {
     }
   };
 
+  const now = new Date();
+  const daysInMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0
+  ).getDate();
+  const percentagedate = Math.round((now.getDate() / daysInMonth) * 100);
   const percentage = 25;
   return (
     <LayoutGas>
@@ -141,18 +161,12 @@ const GasConsumption = () => {
           <div className="navbar-item">
             <div className="field is-grouped">
               <div className="control">
-                <a
-                  className="button is-info"
-                  href="https://github.com/jgthms/bulma/releases/download/0.9.4/bulma-0.9.4.zip"
-                >
+                <a className="button is-info" href="">
                   <CurrentDate />
                 </a>
               </div>
               <p className="control">
-                <a
-                  className="button is-info"
-                  href="https://github.com/jgthms/bulma/releases/download/0.9.4/bulma-0.9.4.zip"
-                >
+                <a className="button is-info" href="">
                   <Clock />
                 </a>
               </p>
@@ -191,6 +205,16 @@ const GasConsumption = () => {
                 <p className="control">
                   <button className="button is-primary">
                     <span>SWIFT ASIA</span>
+                  </button>
+                </p>
+                <p className="control">
+                  <button className="button is-primary">
+                    <span>GRAVITY</span>
+                  </button>
+                </p>
+                <p className="control">
+                  <button className="button is-primary">
+                    <span>TOTAL</span>
                   </button>
                 </p>
               </div>
@@ -262,7 +286,7 @@ const GasConsumption = () => {
                   <div className="level">
                     <span className="has-text-centered has-text-weight-bold pt-4">
                       <br />
-                      {UsedYesterday} mmbtu
+                      {(UsedYesterday / 27.3).toFixed(1)} mmbtu
                     </span>
                     <div style={{ width: 70, height: 62 }}>
                       {/* <CircularProgressbar
@@ -299,13 +323,20 @@ const GasConsumption = () => {
                 style={{ borderBottom: "5px solid #cc0033" }}
               >
                 <div className="card-header is-family-sans-serif pl-4">
-                  This Month M³/Ton
+                  This Month M³
                 </div>
                 <div className="card-content">
-                  <progress className="progress is-danger" value="90" max="100">
+                  <progress
+                    className="progress is-danger"
+                    value={percentagedate}
+                    max="100"
+                  >
                     90%
                   </progress>
-                  <h1>1000</h1>
+
+                  <h1 className=" has-text-weight-bold ">
+                    {consumpperbulanini} M³
+                  </h1>
                 </div>
               </div>
             </div>
@@ -320,34 +351,14 @@ const GasConsumption = () => {
                 <div className="card-content">
                   <progress
                     className="progress is-success"
-                    value="60"
+                    value={percentagedate}
                     max="100"
                   >
-                    60%
+                    90%
                   </progress>
-                  <div style={{ width: 50, height: 27 }}>
-                    <CircularProgressbar
-                      value={percentage}
-                      text={`${percentage}%`}
-                      styles={{
-                        path: {
-                          stroke: "#28a745", // change to info color
-                          strokeLinecap: "round",
-                          transition: "stroke-dashoffset 0.5s ease 0s",
-                        },
-                        trail: {
-                          stroke: "#d6d6d6",
-                          strokeLinecap: "round",
-                        },
-                        text: {
-                          fill: "#28a745", // change to info color
-                          fontSize: "20px",
-                          dominantBaseline: "middle",
-                          textAnchor: "middle",
-                        },
-                      }}
-                    />
-                  </div>
+                  <h1 className=" has-text-weight-bold ">
+                    {(consumpperbulanini / 27.3).toFixed(1)} mmbtu
+                  </h1>
                 </div>
               </div>
             </div>

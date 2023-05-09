@@ -15,6 +15,8 @@ import InputUtility from "./pages/InputUtility";
 import InputPV from "./pages/InputPV";
 import Gas from "./pages/Gas";
 import GasConsumption from "./pages/GasConsumption";
+import Reportgas from "./pages/Reportgas";
+import TotalGas from "./pages/TotalGas";
 
 // import { useState  } from "react";
 // import { Data } from "../utils/Data";
@@ -40,6 +42,8 @@ function App() {
           <Route path="/inputpv" element={<InputPV />} />
           <Route path="/gas" element={<Gas />} />
           <Route path="/gasconsumption" element={<GasConsumption />} />
+          <Route path="/reportgas" element={<Reportgas />} />
+          <Route path="/totalgas" element={<TotalGas />} />
         </Routes>
       </BrowserRouter>
     </div>
