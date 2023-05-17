@@ -7,6 +7,7 @@ import {
   // Legend,
   ResponsiveContainer,
   LineChart,
+  Label,
 } from "recharts";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -50,7 +51,7 @@ const ChartStriko1 = () => {
       <LineChart
         width={600}
         height={300}
-        data={gasConsumptionData.slice(-16)}
+        data={gasConsumptionData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
         <XAxis dataKey="createdAt" tick={{ fontSize: 10 }} />
@@ -61,7 +62,14 @@ const ChartStriko1 = () => {
           strokeWidth={2}
           dot={false} // add this line to remove dots
         />
-        <YAxis scale="log" domain={["dataMin", "dataMax"]} />
+        <YAxis type="number" domain={["auto", "auto"]}>
+          <Label
+            value="Value M³"
+            angle={-90}
+            position="insideLeft"
+            style={{ textAnchor: "middle" }}
+          />
+        </YAxis>
         {/* <Legend /> */}
         <Tooltip />
       </LineChart>

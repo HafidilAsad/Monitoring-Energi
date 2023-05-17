@@ -7,6 +7,10 @@ import {
   IoLogOut,
   IoReader,
   IoAnalytics,
+  IoBarChartSharp,
+  IoTrendingUpOutline,
+  IoFlashSharp,
+  IoWaterSharp,
 } from "react-icons/io5";
 import { LogOut, reset } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -37,10 +41,28 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink to={"/gas"}>
+              <IoWaterSharp /> Monitoring Gas
+            </NavLink>
+          </li>
+          <li>
+            <a href="http://10.14.51.17:8000/login">
+              <IoFlashSharp /> Monitoring Listrik
+            </a>
+          </li>
+          <li>
+            <NavLink to={"/gasconsumption"}>
+              <IoBarChartSharp /> Gas Consumption
+            </NavLink>
+          </li>
+          <li>
             <NavLink to={"/products"}>
               <IoPricetag /> products
             </NavLink>
           </li>
+          <NavLink to={"/reportgas"}>
+            <IoReader /> Report Gas Perhari
+          </NavLink>
         </ul>
         <p className="menu-label">Admin</p>
         <ul className="menu-list">

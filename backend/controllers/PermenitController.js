@@ -34,7 +34,7 @@ export const getKemarin2359 = async function (req, res) {
 
 export const getPermenithariini2jamterahir = async (req, res) => {
   try {
-    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000);
+    const twoHoursAgo = new Date(Date.now() - 8 * 60 * 60 * 1000);
     const response = await Permenit.findAll({
       where: {
         createdAt: {

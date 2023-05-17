@@ -5,6 +5,8 @@ import CurrentDate from "../components/CurrentDate";
 import logo from "../logo.png";
 import ChartStriko1 from "../components/ChartStriko1";
 import ChartStriko2 from "./ChartStriko2";
+import ChartStriko3 from "../components/ChartStriko3";
+import ChartSwiftAsia from "../components/ChartSwiftAsia";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -64,6 +66,7 @@ const Gas = () => {
           <a
             className="navbar-item has-background-white"
             style={{ borderRadius: "0.9rem" }}
+            href=""
           >
             <img src={logo} width="112" height="28" alt="" />
           </a>
@@ -375,7 +378,7 @@ const Gas = () => {
             }}
           >
             <div className="card-content">
-              <ChartStriko1 />
+              <ChartStriko3 />
             </div>
           </div>
         </div>
@@ -475,7 +478,7 @@ const Gas = () => {
             }}
           >
             <div className="card-content">
-              <ChartStriko2 />
+              <ChartSwiftAsia />
             </div>
           </div>
         </div>

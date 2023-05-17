@@ -15,6 +15,10 @@ import InputUtility from "./pages/InputUtility";
 import InputPV from "./pages/InputPV";
 import Gas from "./pages/Gas";
 import GasConsumption from "./pages/GasConsumption";
+import GasConsumptionStriko_2 from "./pages/GasConsumptionStriko_2";
+import GasConsumptionStriko_3 from "./pages/GasConsumptionStriko_3";
+import GasConsumptionSwiftAsia from "./pages/GasConsumptionSwiftAsia";
+import GasConsumptionGravity from "./pages/GasConsumptionGravity";
 import Reportgas from "./pages/Reportgas";
 import TotalGas from "./pages/TotalGas";
 
@@ -42,6 +46,22 @@ function App() {
           <Route path="/inputpv" element={<InputPV />} />
           <Route path="/gas" element={<Gas />} />
           <Route path="/gasconsumption" element={<GasConsumption />} />
+          <Route
+            path="/gasconsumptionstriko2"
+            element={<GasConsumptionStriko_2 />}
+          />
+          <Route
+            path="/gasconsumptionstriko3"
+            element={<GasConsumptionStriko_3 />}
+          />
+          <Route
+            path="/gasconsumptionswiftasia"
+            element={<GasConsumptionSwiftAsia />}
+          />
+          <Route
+            path="/gasconsumptiongravity"
+            element={<GasConsumptionGravity />}
+          />
           <Route path="/reportgas" element={<Reportgas />} />
           <Route path="/totalgas" element={<TotalGas />} />
         </Routes>

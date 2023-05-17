@@ -15,6 +15,11 @@ export const getReportperbulanini = async (req, res) => {
       },
     });
 
+    const gasConsumptionSumTon = response.reduce(
+      (sum, report) => sum + report.gas_consumption,
+      0
+    );
+
     const gasConsumptionSum = response.reduce(
       (sum, report) => sum + report.gas_used,
       0
@@ -23,6 +28,7 @@ export const getReportperbulanini = async (req, res) => {
     res.status(200).json({
       data: response,
       gasConsumptionSum,
+      gasConsumptionSumTon,
     });
   } catch (error) {
     console.log(error.message);
@@ -31,15 +37,11 @@ export const getReportperbulanini = async (req, res) => {
 
 export const getReportConsumptKemarin = async (req, res) => {
   try {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 2);
     const response = await Report.findAll({
-      where: {
-        createdAt: {
-          [Op.between]: [yesterday, new Date()],
-        },
-      },
+      order: [["createdAt", "DESC"]],
+      limit: 1,
     });
+
     res.status(200).json(response);
   } catch (error) {
     console.log(error.message);

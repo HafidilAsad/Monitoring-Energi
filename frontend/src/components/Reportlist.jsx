@@ -103,12 +103,7 @@ const Reportlist = () => {
         </style>
         {/* <button onClick={() => setVisible(!visible)}>{visible ? 'Close Date' : 'Select Date'}</button> */}
         <div className={visible ? "element-visible" : "element-hidden"}>
-          <DateRangePicker
-            ranges={[selectionRange]}
-            onChange={handleSelect}
-            staticRanges={[]}
-            inputRanges={[]}
-          />
+          <DateRangePicker ranges={[selectionRange]} onChange={handleSelect} />
         </div>
         <p className="is-size-5"> Select Date :</p>
       </div>
@@ -128,8 +123,6 @@ const Reportlist = () => {
             <DateRangePicker
               ranges={[selectionRange]}
               onChange={handleSelect}
-              staticRanges={[]}
-              inputRanges={[]}
             />
           )}
         </div>
@@ -139,7 +132,7 @@ const Reportlist = () => {
           className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth"
           ref={tableRef}
         >
-          <thead>
+          <thead className="has-background-grey-light">
             <tr>
               <th>No</th>
               <th>Nama Mesin</th>
@@ -149,34 +142,36 @@ const Reportlist = () => {
             </tr>
           </thead>
           <tbody>
-            {report.map((report, index) => {
-              let date = new Date(report["createdAt"]);
-              return (
-                <tr key={report.id}>
-                  <td>{index + 1}</td>
-                  <td>{report.nama_mesin}</td>
-                  <td>{report.gas_used}</td>
-                  <td>{report.gas_consumption}</td>
-                  <td>
-                    {date.toLocaleDateString("id-ID", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                    })}
-                  </td>
-                  {/* <td>{report.createdAt}</td> */}
-                </tr>
-              );
-            })}
+            {report
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // sort by date in reverse order
+              .map((report, index) => {
+                let date = new Date(report["createdAt"]);
+                return (
+                  <tr key={report.id}>
+                    <td>{index + 1}</td>
+                    <td>{report.nama_mesin}</td>
+                    <td>{report.gas_used}</td>
+                    <td>{report.gas_consumption}</td>
+                    <td>
+                      {date.toLocaleDateString("id-ID", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })}
+                    </td>
+                    {/* <td>{report.createdAt}</td> */}
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
-        <br />
+
         <DownloadTableExcel
           filename="daily report"
           sheet="reports"
           currentTableRef={tableRef.current}
         >
-          <button className="submit-button"> Download Excel </button>
+          <button className="button is-success"> Download Excel </button>
         </DownloadTableExcel>
       </div>
     </div>

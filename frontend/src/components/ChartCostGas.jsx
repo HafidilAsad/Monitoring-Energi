@@ -41,7 +41,11 @@ const ChartCostGas = () => {
   });
   return (
     <div>
-      <ResponsiveContainer width="100%" height={380}>
+      <h1 className="pl-4 is-size-6 has-text-weight-bold">
+        Graphic Perhari mmbtu
+      </h1>
+      <br />
+      <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data2}>
           <XAxis dataKey="tanggal" />
           <YAxis />
@@ -52,9 +56,11 @@ const ChartCostGas = () => {
             barSize={40}
           >
             <LabelList
-              dataKey="gas_consumption"
-              position="top"
-              formatter={(value) => `${value}`}
+              valueAccessor={(props) => {
+                const { value } = props;
+                return Array.isArray(value) ? value[1] - value[0] : value;
+              }}
+              position={"top"}
             />
           </Bar>
           <Tooltip />

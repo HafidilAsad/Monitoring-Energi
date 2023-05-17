@@ -4,7 +4,36 @@ import Clock from "../components/Clock";
 import CurrentDate from "../components/CurrentDate";
 import logo from "../logo.png";
 import ChartCostGas from "../components/ChartCostGas";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 const TotalGas = () => {
+  const [consumpperbulanini, setConsumptionperbulanini] = useState(0);
+  const [consumpperbulaniniton, setConsumptionperbulaniniton] = useState(0);
+
+  //Ambil data perbulan ini Striko 1
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/reportsperbulanini")
+      .then((response) => {
+        setConsumptionperbulanini(response.data.gasConsumptionSum);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+
+  //Ambil data perbulan ini Striko 1
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/reportsperbulanini")
+      .then((response) => {
+        setConsumptionperbulaniniton(response.data.gasConsumptionSumTon);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
   return (
     <LayoutGas>
       <nav
@@ -88,45 +117,62 @@ const TotalGas = () => {
                 style={{ borderBottom: "2px solid #2986cc" }}
               >
                 <p className="control pb-1">
-                  <a href="/" className="button is-primary">
+                  <a href="/gasconsumption" className="button is-primary">
                     <span>STRIKO 1</span>
                   </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a
+                    href="/gasconsumptionstriko2"
+                    className="button is-primary"
+                  >
                     <span>STRIKO 2</span>
-                  </button>
+                  </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a
+                    href="/gasconsumptionstriko3"
+                    className="button is-primary"
+                  >
                     <span>STRIKO 3</span>
-                  </button>
+                  </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a
+                    href="/gasconsumptionswiftasia"
+                    className="button is-primary"
+                  >
                     <span>SWIFT ASIA</span>
-                  </button>
+                  </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a
+                    href="/gasconsumptiongravity"
+                    className="button is-primary"
+                  >
                     <span>GRAVITY</span>
-                  </button>
+                  </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a href="/totalgas" className="button is-primary">
                     <span>TOTAL</span>
-                  </button>
+                  </a>
                 </p>
               </div>
             </div>
           </div>
         </div>
       </nav>
-      <div class="columns">
-        <div class="column">
+      <div className="columns m-1">
+        <div className="column">
           <div className="card">
-            <header className="card-header">
-              <p className="card-header-title">Striko 1</p>
+            <header
+              className="card-header "
+              style={{ borderBottom: "2px solid #2986cc" }}
+            >
+              <p className="card-header-title has-text-grey is-family-monospace">
+                Striko 1
+              </p>
               <button className="card-header-icon" aria-label="more options">
                 <span className="icon">
                   <i className="fas fa-angle-down" aria-hidden="true"></i>
@@ -134,28 +180,33 @@ const TotalGas = () => {
               </button>
             </header>
             <div className="card-content">
-              <div className="content is-size-4 ">
-                nilai persen striko1
+              <div
+                className="content is-size-4   has-text-grey is-family-primary "
+                style={{ fontWeight: 1000 }}
+              >
+                100%
                 <br />
               </div>
             </div>
             <footer className="card-footer">
               <a href="#" className="card-footer-item">
-                Save
+                {(consumpperbulanini / 27.3).toFixed(1)} mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                Edit
-              </a>
-              <a href="#" className="card-footer-item">
-                Delete
+                {consumpperbulaniniton.toFixed()} M³/Ton
               </a>
             </footer>
           </div>
         </div>
-        <div class="column">
+        <div className="column">
           <div className="card">
-            <header className="card-header">
-              <p className="card-header-title">Striko2</p>
+            <header
+              className="card-header"
+              style={{ borderBottom: "2px solid #2986cc" }}
+            >
+              <p className="card-header-title has-text-grey is-family-monospace">
+                Striko 2
+              </p>
               <button className="card-header-icon" aria-label="more options">
                 <span className="icon">
                   <i className="fas fa-angle-down" aria-hidden="true"></i>
@@ -163,28 +214,33 @@ const TotalGas = () => {
               </button>
             </header>
             <div className="card-content">
-              <div className="content is-size-4 ">
-                nilai persen striko2
+              <div
+                className="content is-size-4   has-text-grey is-family-primary "
+                style={{ fontWeight: 1000 }}
+              >
+                0%
                 <br />
               </div>
             </div>
             <footer className="card-footer">
               <a href="#" className="card-footer-item">
-                Save
+                mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                Edit
-              </a>
-              <a href="#" className="card-footer-item">
-                Delete
+                M³/Ton
               </a>
             </footer>
           </div>
         </div>
-        <div class="column">
+        <div className="column">
           <div className="card">
-            <header className="card-header">
-              <p className="card-header-title">Striko3</p>
+            <header
+              className="card-header"
+              style={{ borderBottom: "2px solid #2986cc" }}
+            >
+              <p className="card-header-title has-text-grey is-family-monospace">
+                Striko 3
+              </p>
               <button className="card-header-icon" aria-label="more options">
                 <span className="icon">
                   <i className="fas fa-angle-down" aria-hidden="true"></i>
@@ -192,28 +248,33 @@ const TotalGas = () => {
               </button>
             </header>
             <div className="card-content">
-              <div className="content is-size-4 ">
-                nilai persen striko3
+              <div
+                className="content is-size-4   has-text-grey is-family-primary "
+                style={{ fontWeight: 1000 }}
+              >
+                0%
                 <br />
               </div>
             </div>
             <footer className="card-footer">
               <a href="#" className="card-footer-item">
-                Save
+                0 mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                Edit
-              </a>
-              <a href="#" className="card-footer-item">
-                Delete
+                0 M³/Ton
               </a>
             </footer>
           </div>
         </div>
-        <div class="column">
+        <div className="column">
           <div className="card">
-            <header className="card-header">
-              <p className="card-header-title">Swift Asia</p>
+            <header
+              className="card-header"
+              style={{ borderBottom: "2px solid #2986cc" }}
+            >
+              <p className="card-header-title has-text-grey is-family-monospace">
+                Swift Asia
+              </p>
               <button className="card-header-icon" aria-label="more options">
                 <span className="icon">
                   <i className="fas fa-angle-down" aria-hidden="true"></i>
@@ -221,28 +282,33 @@ const TotalGas = () => {
               </button>
             </header>
             <div className="card-content">
-              <div className="content is-size-4 ">
-                persen swift asia
+              <div
+                className="content is-size-4   has-text-grey is-family-primary "
+                style={{ fontWeight: 1000 }}
+              >
+                0%
                 <br />
               </div>
             </div>
             <footer className="card-footer">
               <a href="#" className="card-footer-item">
-                Save
+                0 mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                Edit
-              </a>
-              <a href="#" className="card-footer-item">
-                Delete
+                0 M³/Ton
               </a>
             </footer>
           </div>
         </div>
-        <div class="column">
+        <div className="column">
           <div className="card">
-            <header className="card-header ">
-              <p className="card-header-title ">Gravity</p>
+            <header
+              className="card-header "
+              style={{ borderBottom: "2px solid #2986cc" }}
+            >
+              <p className="card-header-title has-text-grey is-family-monospace">
+                Gravity
+              </p>
               <button className="card-header-icon" aria-label="more options">
                 <span className="icon">
                   <i className="fas fa-angle-down" aria-hidden="true"></i>
@@ -250,37 +316,84 @@ const TotalGas = () => {
               </button>
             </header>
             <div className="card-content">
-              <div className="content is-size-4 ">
-                nilai persen gravity
+              <div
+                className="content is-size-4   has-text-grey is-family-primary "
+                style={{ fontWeight: 1000 }}
+              >
+                0%
                 <br />
               </div>
             </div>
             <footer className="card-footer">
               <a href="#" className="card-footer-item">
-                Save
+                0 mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                Edit
-              </a>
-              <a href="#" className="card-footer-item">
-                Delete
+                0 M³/Ton
               </a>
             </footer>
           </div>
         </div>
       </div>
-      <div class="columns">
-        <div class="column is-half has-background-white is-9">
-          <div className="field">
-            <ChartCostGas />
+      <div className="columns m-1">
+        <div className="column is-full">
+          <div className="card">
+            <div className="card-header">
+              <div className="card-header-title has-background-info">
+                <p className="has-text-white">
+                  <div className="select is-small">
+                    <select>
+                      <option>Graphic Perhari</option>
+                      <option>Graphic Perbulan</option>
+                    </select>
+                  </div>
+                </p>
+              </div>
+            </div>
+            <div className="card-content">
+              <div className="columns">
+                <div className="column is-half has-background-white is-9">
+                  <div className="field">
+                    <ChartCostGas />
+                  </div>
+                </div>
+                <div className="column">
+                  <div
+                    className="box  is-family-monospace  has-text-weight-bold"
+                    style={{ borderLeft: "5px solid #2986cc" }}
+                  >
+                    TOTAL (mmbtu) : {(consumpperbulanini / 27.3).toFixed(1)}
+                  </div>
+                  <div
+                    className="box  is-family-monospace  has-text-weight-bold"
+                    style={{ borderLeft: "5px solid #2986cc" }}
+                  >
+                    TOTAL :{" "}
+                    {((consumpperbulanini / 27.2203879834687) * 9.6)
+
+                      .toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })
+                      .replace(/^(\D+)/, "$1 ")}
+                  </div>
+
+                  <div
+                    className="box  is-family-monospace  has-text-weight-bold"
+                    style={{ borderLeft: "5px solid #2986cc" }}
+                  >
+                    MAX (mmbtu) : 18000
+                  </div>
+                  <div
+                    className="box  is-family-monospace  has-text-weight-bold"
+                    style={{ borderLeft: "5px solid #2986cc" }}
+                  >
+                    -
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="column">
-          <div className="box">PPPP</div>
-          <div className="box">pppp</div>
-          <div className="box">pppp</div>
-          <div className="box">pppp</div>
-          <div className="box">pppp</div>
         </div>
       </div>
     </LayoutGas>

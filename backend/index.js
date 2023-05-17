@@ -13,6 +13,7 @@ import ReportRoute from "./routes/ReportRoute.js";
 import Striko1Route from "./routes/Striko1Route.js";
 import PermenitRoute from "./routes/Permenit.js";
 import AkhirHariRoute from "./routes/AkhirHariRoute.js";
+import PesanNotifikai from "./routes/PesanNotifikasi.js";
 import cron from "node-cron";
 import axios from "axios";
 import schedule from "node-schedule";
@@ -64,6 +65,7 @@ app.use(ReportRoute);
 app.use(Striko1Route);
 app.use(PermenitRoute);
 app.use(AkhirHariRoute);
+app.use(PesanNotifikai);
 
 //store.sync();
 
@@ -71,7 +73,7 @@ app.listen(process.env.APP_PORT, () => {
   console.log("server up and running....");
 });
 
-const job = schedule.scheduleJob("8 16 * * *", async () => {
+const job = schedule.scheduleJob("45 15 * * *", async () => {
   let gas_kemarin = 0;
   try {
     const response = await axios.get("http://localhost:5000/akhirharikemarin");
@@ -87,13 +89,18 @@ const job = schedule.scheduleJob("8 16 * * *", async () => {
     "http://10.14.20.212:3551/api/lhpChargingStriko1"
   );
   const filteredData = response.data.filter((item) => item.tanggal === today);
-  const totalChargingStriko1 = filteredData[0].total_charging_rs;
+  const totalChargingStriko1 = filteredData[0]?.total_charging_rs || 0;
 
   const gasUsedMentah = await getData();
   const gasUsed = gasUsedMentah - gas_kemarin;
   const namaMesin = "Striko 1";
-  const gasConsumption = (gasUsed / totalChargingStriko1) * 1000; //ngambil API LHP Charging http://10.14.20.212:3551/api/lhpChargingSwiftAsia
-  const roundedGasConsumption = gasConsumption.toFixed(1);
+  let gasConsumption = 0;
+  let roundedGasConsumption = 0;
+  if (totalChargingStriko1 !== 0) {
+    gasConsumption = (gasUsed / totalChargingStriko1) * 1000; //ngambil API LHP Charging http://10.14.20.212:3551/api/lhpChargingSwiftAsia
+    roundedGasConsumption = gasConsumption.toFixed(1);
+  }
+
   const data = {
     nama_mesin: namaMesin,
     gas_used: gasUsed,
@@ -106,6 +113,18 @@ const job = schedule.scheduleJob("8 16 * * *", async () => {
   try {
     const response = await axios.post("http://localhost:5000/addreports", data);
     console.log("Data posted:", response.data);
+
+    // Check if gas consumption is greater than 60 and post notification
+    if (roundedGasConsumption > 10) {
+      const notificationData = {
+        pesan_notifikasi: "Gas Consumption Striko1 is Exceed The Limit",
+      };
+      const notificationResponse = await axios.post(
+        "http://localhost:5000/addpesannotifikasi",
+        notificationData
+      );
+      console.log("Notification posted:", notificationResponse.data);
+    }
   } catch (error) {
     console.error("Error posting data:", error);
   }

@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import "../components/css/welcome.css";
 
-const ChartStriko2 = () => {
+const ChartStriko3 = () => {
   const [gasConsumptionData, setGasConsumptionData] = useState([]);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const ChartStriko2 = () => {
             minute: "2-digit",
             hour12: false,
           }),
-          gas_consumption: item.gas_used + Math.floor(Math.random() * 20) + 15,
+          gas_consumption: item.gas_used + Math.floor(Math.random() * 33) + 1,
         }));
         setGasConsumptionData(data);
       } catch (error) {
@@ -79,4 +79,4 @@ const ChartStriko2 = () => {
   );
 };
 
-export default ChartStriko2;
+export default ChartStriko3;

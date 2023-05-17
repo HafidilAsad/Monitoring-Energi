@@ -10,6 +10,8 @@ import "react-circular-progressbar/dist/styles.css";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import { IoNotificationsOutline } from "react-icons/io5";
+import "../components/css/welcome.css";
 
 const GasConsumption = () => {
   const [gas_kemarin, setGas_kemarin] = useState([]);
@@ -105,6 +107,36 @@ const GasConsumption = () => {
   ).getDate();
   const percentagedate = Math.round((now.getDate() / daysInMonth) * 100);
   const percentage = 25;
+
+  ////================== fungsi untuk notifikasi ===============================================
+
+  const [showModal, setShowModal] = useState(false);
+  const [badgeNumber, setBadgeNumber] = useState(1);
+  const [pesanNotifikasi, setPesanNotifikasi] = useState([]);
+
+  useEffect(() => {
+    getPesanNotifikasi();
+  });
+
+  const getPesanNotifikasi = async () => {
+    const response = await axios.get("http://localhost:5000/pesannotifikasi");
+    setPesanNotifikasi(response.data);
+  };
+
+  function handleClick() {
+    setShowModal(!showModal);
+    setBadgeNumber(0);
+  }
+
+  const handleCheckboxChange = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/pesannotifikasi/${id}`);
+      getPesanNotifikasi(); // Fetch updated notifications after deletion
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <LayoutGas>
       <nav
@@ -161,15 +193,22 @@ const GasConsumption = () => {
           <div className="navbar-item">
             <div className="field is-grouped">
               <div className="control">
-                <a className="button is-info" href="">
+                <p className="button is-info" href="">
                   <CurrentDate />
-                </a>
+                </p>
               </div>
               <p className="control">
-                <a className="button is-info" href="">
+                <p className="button is-info" href="">
                   <Clock />
-                </a>
+                </p>
               </p>
+
+              <div className="icon pt-5" onClick={handleClick}>
+                <IoNotificationsOutline
+                  style={{ width: "25px", height: "25px" }}
+                />
+                <span className="topIconBadge">{badgeNumber}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -188,42 +227,109 @@ const GasConsumption = () => {
                 style={{ borderBottom: "2px solid #2986cc" }}
               >
                 <p className="control pb-1">
-                  <a href="/" className="button is-primary">
+                  <a href="/gasconsumption" className="button is-primary">
                     <span>STRIKO 1</span>
                   </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a
+                    href="/gasconsumptionstriko2"
+                    className="button is-primary"
+                  >
                     <span>STRIKO 2</span>
-                  </button>
+                  </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a
+                    href="/gasconsumptionstriko3"
+                    className="button is-primary"
+                  >
                     <span>STRIKO 3</span>
-                  </button>
+                  </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a
+                    href="/gasconsumptionswiftasia"
+                    className="button is-primary"
+                  >
                     <span>SWIFT ASIA</span>
-                  </button>
+                  </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a
+                    href="/gasconsumptiongravity"
+                    className="button is-primary"
+                  >
                     <span>GRAVITY</span>
-                  </button>
+                  </a>
                 </p>
-                <p className="control">
-                  <button className="button is-primary">
+                <p className="control pb-1">
+                  <a href="/totalgas" className="button is-primary">
                     <span>TOTAL</span>
-                  </button>
+                  </a>
                 </p>
               </div>
             </div>
           </div>
         </div>
       </nav>
-      <div className="columns ">
-        <div className="column is-half has-background-white ">
+      <div className={`modal  ${showModal ? "is-active " : ""}`}>
+        <div className="modal-background"></div>
+        <div className="modal-card ">
+          <header className="modal-card-head is-fullwidth">
+            <p className="modal-card-title">Notification</p>
+            <button
+              className="delete"
+              aria-label="close"
+              onClick={handleClick}
+            ></button>
+          </header>
+          <section className="modal-card-body">
+            <table className="table is-stripped is-fullwidth">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Pesan Notifikasi</th>
+                  <th>Tanggal</th>
+                  <th>Ack</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pesanNotifikasi
+                  .sort((a, b) => b.id - a.id) // sort by id in descending order
+                  .map((pesan, index) => (
+                    <tr key={pesan.id}>
+                      <td>{index + 1}</td>
+                      <td>{pesan.pesan_notifikasi}</td>
+                      <td>
+                        {new Date(pesan.createdAt).toLocaleDateString("en-GB")}
+                      </td>
+                      <td>
+                        <label className="checkbox">
+                          <input
+                            type="checkbox"
+                            checked={false} // Replace with the corresponding checked state of the notification
+                            onChange={() => handleCheckboxChange(pesan.id)}
+                          />
+                          Rec
+                        </label>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </section>
+          <footer className="modal-card-foot">
+            <button className="button is-info">Ok</button>
+            <button className="button" onClick={handleClick}>
+              Cancel
+            </button>
+          </footer>
+        </div>
+      </div>
+
+      <div className="columns m-1 ">
+        <div className="column is-half has-background-white  ">
           <h1 className="subtitle has-text-centered has-text-weight-semibold is-family-sans-serif">
             Graphic Gas Consumption M³/Ton
           </h1>
@@ -365,7 +471,7 @@ const GasConsumption = () => {
           </div>
         </div>
       </div>
-      <div className="columns ">
+      <div className="columns m-1 ">
         <div className="column is-half ">
           <div className="columns">
             <div className="column">
@@ -388,7 +494,7 @@ const GasConsumption = () => {
                           {(
                             (item.gas_consumption - gas_kemarin) /
                             27.2203879834687
-                          ).toFixed(1)}{" "}
+                          ).toFixed(1)}
                           mmbtu
                         </span>
                       ))}

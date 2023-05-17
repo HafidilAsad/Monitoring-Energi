@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import "../components/css/welcome.css";
 
-const ChartStriko2 = () => {
+const ChartSwiftAsia = () => {
   const [gasConsumptionData, setGasConsumptionData] = useState([]);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const ChartStriko2 = () => {
             minute: "2-digit",
             hour12: false,
           }),
-          gas_consumption: item.gas_used + Math.floor(Math.random() * 20) + 15,
+          gas_consumption: item.gas_used + Math.floor(Math.random() * 35) + 1,
         }));
         setGasConsumptionData(data);
       } catch (error) {
@@ -65,13 +65,14 @@ const ChartStriko2 = () => {
         />
         <YAxis type="number" domain={["auto", "auto"]}>
           <Label
-            value="ON GOING..."
+            value="ON GOING ..."
             angle={-90}
             position="insideLeft"
             style={{ textAnchor: "middle" }}
             className="blink"
           />
         </YAxis>
+
         {/* <Legend /> */}
         <Tooltip />
       </LineChart>
@@ -79,4 +80,4 @@ const ChartStriko2 = () => {
   );
 };
 
-export default ChartStriko2;
+export default ChartSwiftAsia;

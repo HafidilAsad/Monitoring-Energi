@@ -66,22 +66,24 @@ const ChartStriko1Consumption = () => {
   }, [gas_kemarin]);
 
   return (
-    <ResponsiveContainer width="100%" height={230}>
-      <LineChart width={600} height={300} data={gasConsumptionData.slice(-20)}>
-        <XAxis dataKey="createdAt" tick={{ fontSize: 10 }} />
-        <Line
-          type="monotone"
-          dataKey="gas_consumption"
-          stroke="#1e90ff"
-          strokeWidth={3}
-          dot={false} // add this line to remove dots
-        />
-        <YAxis scale="log" domain={["dataMin", "dataMax"]} />
-        {/* <Legend /> */}
-        <Tooltip />
-        <ReferenceLine y={4} stroke="red" label="Target" />
-      </LineChart>
-    </ResponsiveContainer>
+    <div>
+      <ResponsiveContainer width="100%" height={230}>
+        <LineChart width={600} height={300} data={gasConsumptionData}>
+          <XAxis dataKey="createdAt" tick={{ fontSize: 10 }} />
+          <Line
+            type="monotone"
+            dataKey="gas_consumption"
+            stroke="#1e90ff"
+            strokeWidth={3}
+            dot={false} // add this line to remove dots
+          />
+          <YAxis scale="log" domain={["dataMin", "dataMax"]} />
+          {/* <Legend /> */}
+          <Tooltip />
+          <ReferenceLine y={4} stroke="red" label="Target" />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
