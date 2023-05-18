@@ -70,7 +70,7 @@ app.use(PesanNotifikai);
 //store.sync();
 
 app.listen(process.env.APP_PORT, () => {
-  console.log("server up and running....");
+  console.log("server up and running.... in port 5000");
 });
 
 const job = schedule.scheduleJob("45 15 * * *", async () => {

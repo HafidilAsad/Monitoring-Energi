@@ -21,6 +21,7 @@ import GasConsumptionSwiftAsia from "./pages/GasConsumptionSwiftAsia";
 import GasConsumptionGravity from "./pages/GasConsumptionGravity";
 import Reportgas from "./pages/Reportgas";
 import TotalGas from "./pages/TotalGas";
+import TVGas from "./pages/TVGas";
 
 // import { useState  } from "react";
 // import { Data } from "../utils/Data";
@@ -64,6 +65,7 @@ function App() {
           />
           <Route path="/reportgas" element={<Reportgas />} />
           <Route path="/totalgas" element={<TotalGas />} />
+          <Route path="/tvgas" element={<TVGas />} />
         </Routes>
       </BrowserRouter>
     </div>
