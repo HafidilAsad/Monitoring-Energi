@@ -9,6 +9,41 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const TVGas = () => {
+  const [report, setReport] = useState([]);
+  //mengambil data realtime dari sensor
+  useEffect(() => {
+    const getReports = async () => {
+      const result = await axios.get("http://localhost:5000/striko1s");
+      setReport(result.data);
+    };
+
+    // Memanggil getReports setiap 1 detik
+    const intervalId = setInterval(() => {
+      getReports();
+    }, 500);
+
+    // Membersihkan interval ketika komponen unmount
+    return () => clearInterval(intervalId);
+  }, []); // Menambahkan array dependensi kosong
+
+  //Mengambil data gas_consumption kemarin
+  const [gas_kemarin, setGas_kemarin] = useState([]);
+
+  useEffect(() => {
+    const getGas_kemarin = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/akhirharikemarin"
+        );
+        const gasConsumptions = response.data.map((gas) => gas.gas_consumption);
+        setGas_kemarin(gasConsumptions);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getGas_kemarin();
+  }, []);
+  //untuk Fungsi Notifikasi
   const [showModal, setShowModal] = useState(false);
   const [badgeNumber, setBadgeNumber] = useState(1);
   const [pesanNotifikasi, setPesanNotifikasi] = useState([]);
@@ -156,42 +191,72 @@ const TVGas = () => {
                 STRIKO 1
               </span>
             </header>
-            <div className="card-content SA pl-6">
-              <div className="columns ml-6 pl-6">
-                <div className="column  pl-5">
-                  <p
-                    className="has-text-grey is-family-monospace has-text-weight-bold"
-                    style={{ fontSize: "70px" }}
-                  >
-                    1000 M³
-                  </p>
+            <div className="card-content  pl-6">
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label"></label>
                 </div>
-                <div className="column">
-                  <div
-                    className="vertical-progress-bar pt-6"
-                    // style={{ width: "5px" }}
-                  >
-                    <progress
-                      className="progress is-info "
-                      value="60" // Adjust the progress value as per your requirement
-                      max="100" // Adjust the maximum value as per your requirement
-                      style={{
-                        transform: "rotate(-90deg)", // Rotate the progress bar vertically
-                        height: "28px", // Adjust the height of the progress bar
-                        width: "130px",
-                      }}
-                    >
-                      60% {/* Display the progress percentage */}
-                    </progress>
+                <div class="field-body">
+                  <div class="field">
+                    {report
+                      .filter(({ id }) => id === 1)
+                      .map((item) => (
+                        <div
+                          className="has-text-grey is-family-monospace has-text-weight-bold"
+                          style={{ fontSize: "70px" }}
+                        >
+                          {item.gas_consumption - gas_kemarin} M³
+                        </div>
+                      ))}
+                  </div>
+                  <div class="field">
+                    <p class="control is-expanded has-icons-left has-icons-right pt-2">
+                      <p>
+                        <div className="vertical-progress-bar pt-5">
+                          {report
+                            .filter(({ id }) => id === 1)
+                            .map((item) => (
+                              <progress
+                                className="progress is-info level-right "
+                                value={item.gas_used} // Adjust the progress value as per your requirement
+                                max="100" // Adjust the maximum value as per your requirement
+                                style={{
+                                  transform: "rotate(-90deg)", // Rotate the progress bar vertically
+                                  height: "38px", // Adjust the height of the progress bar
+                                  width: "130px",
+                                }}
+                              >
+                                60% {/* Display the progress percentage */}
+                              </progress>
+                            ))}
+                        </div>
+                      </p>
+                      <span class="icon is-small is-left" />
+                      <i class="fas fa-envelope"></i>
+                      <span />
+                      <span class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                      </span>
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
             <footer className="card-footer-item">
-              <p className="card-footer-item">FLOW = 0 M³/h</p>
-              <p className="card-footer-item">TONAGE = TON</p>
-              <p className="card-footer-item">CONS = 0 M³/Ton</p>
+              {report
+                .filter(({ id }) => id === 1)
+                .map((item) => (
+                  <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                    FLOW = {item.gas_used} M³/h
+                  </p>
+                ))}
+              <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                TONAGE = TON
+              </p>
+              <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                CONS = 0 M³/Ton
+              </p>
             </footer>
           </div>
         </div>
@@ -205,18 +270,71 @@ const TVGas = () => {
                 STRIKO 2
               </span>
             </header>
-            <div className="card-content">
-              <p
-                className=" has-text-grey is-family-monospace  has-text-weight-bold"
-                style={{ fontSize: "70px" }}
-              >
-                1000 M³
-              </p>
+            <div className="card-content  pl-6">
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label"></label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    {report
+                      .filter(({ id }) => id === 2)
+                      .map((item) => (
+                        <div
+                          className="has-text-grey is-family-monospace has-text-weight-bold"
+                          style={{ fontSize: "70px" }}
+                        >
+                          {item.gas_consumption} M³
+                        </div>
+                      ))}
+                  </div>
+                  <div class="field">
+                    <p class="control is-expanded has-icons-left has-icons-right pt-2">
+                      <p>
+                        <div className="vertical-progress-bar pt-5">
+                          {report
+                            .filter(({ id }) => id === 2)
+                            .map((item) => (
+                              <progress
+                                className="progress is-info level-right "
+                                value={item.gas_used} // Adjust the progress value as per your requirement
+                                max="100" // Adjust the maximum value as per your requirement
+                                style={{
+                                  transform: "rotate(-90deg)", // Rotate the progress bar vertically
+                                  height: "38px", // Adjust the height of the progress bar
+                                  width: "130px",
+                                }}
+                              >
+                                60% {/* Display the progress percentage */}
+                              </progress>
+                            ))}
+                        </div>
+                      </p>
+                      <span class="icon is-small is-left" />
+                      <i class="fas fa-envelope"></i>
+                      <span />
+                      <span class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
             <footer className="card-footer-item">
-              <p className="card-footer-item">FLOW = 0 M³/h</p>
-              <p className="card-footer-item">TONAGE = TON</p>
-              <p className="card-footer-item">CONS = 0 M³/Ton</p>
+              {report
+                .filter(({ id }) => id === 2)
+                .map((item) => (
+                  <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                    FLOW = {item.gas_used} M³/h
+                  </p>
+                ))}
+              <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                TONAGE = TON
+              </p>
+              <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                CONS = 0 M³/Ton
+              </p>
             </footer>
           </div>
         </div>
@@ -232,18 +350,71 @@ const TVGas = () => {
                 STRIKO 3
               </span>
             </header>
-            <div className="card-content">
-              <p
-                className=" has-text-grey is-family-monospace  has-text-weight-bold"
-                style={{ fontSize: "70px" }}
-              >
-                1000 M³
-              </p>
+            <div className="card-content  pl-6">
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label"></label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    {report
+                      .filter(({ id }) => id === 3)
+                      .map((item) => (
+                        <div
+                          className="has-text-grey is-family-monospace has-text-weight-bold"
+                          style={{ fontSize: "70px" }}
+                        >
+                          {item.gas_consumption} M³
+                        </div>
+                      ))}
+                  </div>
+                  <div class="field">
+                    <p class="control is-expanded has-icons-left has-icons-right pt-2">
+                      <p>
+                        <div className="vertical-progress-bar pt-5">
+                          {report
+                            .filter(({ id }) => id === 3)
+                            .map((item) => (
+                              <progress
+                                className="progress is-info level-right "
+                                value={item.gas_used} // Adjust the progress value as per your requirement
+                                max="100" // Adjust the maximum value as per your requirement
+                                style={{
+                                  transform: "rotate(-90deg)", // Rotate the progress bar vertically
+                                  height: "38px", // Adjust the height of the progress bar
+                                  width: "130px",
+                                }}
+                              >
+                                60% {/* Display the progress percentage */}
+                              </progress>
+                            ))}
+                        </div>
+                      </p>
+                      <span class="icon is-small is-left" />
+                      <i class="fas fa-envelope"></i>
+                      <span />
+                      <span class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
             <footer className="card-footer-item">
-              <p className="card-footer-item">FLOW = 0 M³/h</p>
-              <p className="card-footer-item">TONAGE = TON</p>
-              <p className="card-footer-item">CONS = 0 M³/Ton</p>
+              {report
+                .filter(({ id }) => id === 3)
+                .map((item) => (
+                  <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                    FLOW = {item.gas_used} M³/h
+                  </p>
+                ))}
+              <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                TONAGE = TON
+              </p>
+              <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                CONS = 0 M³/Ton
+              </p>
             </footer>
           </div>
         </div>
@@ -257,18 +428,71 @@ const TVGas = () => {
                 SWIFT ASIA
               </span>
             </header>
-            <div className="card-content">
-              <p
-                className=" has-text-grey is-family-monospace  has-text-weight-bold"
-                style={{ fontSize: "70px" }}
-              >
-                1000 M³
-              </p>
+            <div className="card-content  pl-6">
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label"></label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    {report
+                      .filter(({ id }) => id === 4)
+                      .map((item) => (
+                        <div
+                          className="has-text-grey is-family-monospace has-text-weight-bold"
+                          style={{ fontSize: "70px" }}
+                        >
+                          {item.gas_consumption} M³
+                        </div>
+                      ))}
+                  </div>
+                  <div class="field">
+                    <p class="control is-expanded has-icons-left has-icons-right pt-2">
+                      <p>
+                        <div className="vertical-progress-bar pt-5">
+                          {report
+                            .filter(({ id }) => id === 4)
+                            .map((item) => (
+                              <progress
+                                className="progress is-info level-right "
+                                value={item.gas_used} // Adjust the progress value as per your requirement
+                                max="100" // Adjust the maximum value as per your requirement
+                                style={{
+                                  transform: "rotate(-90deg)", // Rotate the progress bar vertically
+                                  height: "38px", // Adjust the height of the progress bar
+                                  width: "130px",
+                                }}
+                              >
+                                60% {/* Display the progress percentage */}
+                              </progress>
+                            ))}
+                        </div>
+                      </p>
+                      <span class="icon is-small is-left" />
+                      <i class="fas fa-envelope"></i>
+                      <span />
+                      <span class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
             <footer className="card-footer-item">
-              <p className="card-footer-item">FLOW = 0 M³/h</p>
-              <p className="card-footer-item">TONAGE = TON</p>
-              <p className="card-footer-item">CONS = 0 M³/Ton</p>
+              {report
+                .filter(({ id }) => id === 4)
+                .map((item) => (
+                  <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                    FLOW = {item.gas_used} M³/h
+                  </p>
+                ))}
+              <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                TONAGE = TON
+              </p>
+              <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                CONS = 0 M³/Ton
+              </p>
             </footer>
           </div>
         </div>
