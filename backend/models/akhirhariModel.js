@@ -4,7 +4,7 @@ import db from "../config/DatabaseGas.js";
 const { DataTypes } = Sequelize;
 
 const Akhirhari = db.define(
-  "akhir_hari",
+  "db_akhir_hari",
   {
     nama_mesin: DataTypes.STRING,
     gas_used: DataTypes.STRING,

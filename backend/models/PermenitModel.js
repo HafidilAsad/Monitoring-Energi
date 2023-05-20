@@ -4,7 +4,7 @@ import db from "../config/DatabaseGas.js";
 const { DataTypes } = Sequelize;
 
 const Permenit = db.define(
-  "permenit",
+  "db_permenit",
   {
     nama_mesin: DataTypes.STRING,
     gas_used: DataTypes.STRING,

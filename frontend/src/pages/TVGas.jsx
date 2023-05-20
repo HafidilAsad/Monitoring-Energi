@@ -9,7 +9,126 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const TVGas = () => {
+  //mengambil Tonase charging
+  const [totalChargingStriko1, setTotalChargingStriko1] = useState(0);
+  const [totalChargingStriko2, setTotalChargingStriko2] = useState(0);
+  const [totalChargingStriko3, setTotalChargingStriko3] = useState(0);
+  const [totalChargingSwiftAsia, setTotalChargingSwiftAsia] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [badgeNumber, setBadgeNumber] = useState(1);
+  const [pesanNotifikasi, setPesanNotifikasi] = useState([]);
   const [report, setReport] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const today = new Date().toISOString().slice(0, 10); // Get current date in ISO format
+        const response = await axios.get(
+          "http://10.14.20.212:3551/api/lhpChargingStriko1"
+        );
+        const filteredData = response.data.filter(
+          (item) => item.tanggal === today
+        );
+        const totalChargingStriko1 =
+          filteredData.length > 0 ? filteredData[0].total_charging_rs : 0;
+        setTotalChargingStriko1(totalChargingStriko1);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData(); // Initial fetch
+
+    const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clean up the interval when the component unmounts
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const today = new Date().toISOString().slice(0, 10); // Get current date in ISO format
+        const response = await axios.get(
+          "http://10.14.20.212:3551/api/lhpChargingStriko2"
+        );
+        const filteredData = response.data.filter(
+          (item) => item.tanggal === today
+        );
+        const totalChargingStriko2 =
+          filteredData.length > 0 ? filteredData[0].total_charging_rs : 0;
+        setTotalChargingStriko2(totalChargingStriko2);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData(); // Initial fetch
+
+    const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clean up the interval when the component unmounts
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const today = new Date().toISOString().slice(0, 10); // Get current date in ISO format
+        const response = await axios.get(
+          "http://10.14.20.212:3551/api/lhpChargingStriko3"
+        );
+        const filteredData = response.data.filter(
+          (item) => item.tanggal === today
+        );
+        const totalChargingStriko3 =
+          filteredData.length > 0 ? filteredData[0].total_charging_rs : 0;
+        setTotalChargingStriko3(totalChargingStriko3);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData(); // Initial fetch
+
+    const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clean up the interval when the component unmounts
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const today = new Date().toISOString().slice(0, 10); // Get current date in ISO format
+        const response = await axios.get(
+          "http://10.14.20.212:3551/api/lhpChargingSwiftAsia"
+        );
+        const filteredData = response.data.filter(
+          (item) => item.tanggal === today
+        );
+        const totalChargingSwiftAsia =
+          filteredData.length > 0 ? filteredData[0].total_charging_rs : 0;
+        setTotalChargingSwiftAsia(totalChargingSwiftAsia);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData(); // Initial fetch
+
+    const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clean up the interval when the component unmounts
+    };
+  }, []);
+
+  //================================================
+
   //mengambil data realtime dari sensor
   useEffect(() => {
     const getReports = async () => {
@@ -44,9 +163,6 @@ const TVGas = () => {
     getGas_kemarin();
   }, []);
   //untuk Fungsi Notifikasi
-  const [showModal, setShowModal] = useState(false);
-  const [badgeNumber, setBadgeNumber] = useState(1);
-  const [pesanNotifikasi, setPesanNotifikasi] = useState([]);
 
   useEffect(() => {
     getPesanNotifikasi();
@@ -105,15 +221,15 @@ const TVGas = () => {
           <div className="navbar-item">
             <div className="field is-grouped">
               <div className="control">
-                <p className="button is-info" href="">
+                <div className="button is-info" href="">
                   <CurrentDate />
-                </p>
+                </div>
               </div>
-              <p className="control">
-                <p className="button is-info" href="">
+              <div className="control">
+                <div className="button is-info" href="">
                   <Clock />
-                </p>
-              </p>
+                </div>
+              </div>
 
               <div className="icon pt-5" onClick={handleClick}>
                 <IoNotificationsOutline
@@ -192,12 +308,12 @@ const TVGas = () => {
               </span>
             </header>
             <div className="card-content  pl-6">
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label"></label>
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label"></label>
                 </div>
-                <div class="field-body">
-                  <div class="field">
+                <div className="field-body">
+                  <div className="field">
                     {report
                       .filter(({ id }) => id === 1)
                       .map((item) => (
@@ -209,9 +325,9 @@ const TVGas = () => {
                         </div>
                       ))}
                   </div>
-                  <div class="field">
-                    <p class="control is-expanded has-icons-left has-icons-right pt-2">
-                      <p>
+                  <div className="field">
+                    <div className="control is-expanded has-icons-left has-icons-right pt-2">
+                      <div>
                         <div className="vertical-progress-bar pt-5">
                           {report
                             .filter(({ id }) => id === 1)
@@ -230,14 +346,14 @@ const TVGas = () => {
                               </progress>
                             ))}
                         </div>
-                      </p>
-                      <span class="icon is-small is-left" />
-                      <i class="fas fa-envelope"></i>
+                      </div>
+                      <span className="icon is-small is-left" />
+                      <i className="fas fa-envelope"></i>
                       <span />
-                      <span class="icon is-small is-right">
-                        <i class="fas fa-check"></i>
+                      <span className="icon is-small is-right">
+                        <i className="fas fa-check"></i>
                       </span>
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -252,11 +368,21 @@ const TVGas = () => {
                   </p>
                 ))}
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                TONAGE = TON
+                TONAGE = {totalChargingStriko1} Kg
               </p>
-              <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                CONS = 0 M³/Ton
-              </p>
+              {report
+                .filter(({ id }) => id === 1)
+                .map((item) => (
+                  <p className="card-footer-item has-text-weight-bold has-text-grey ">
+                    CONS ={" "}
+                    {(
+                      ((item.gas_consumption - gas_kemarin) /
+                        totalChargingStriko1) *
+                      1000
+                    ).toFixed(1)}{" "}
+                    M³/Ton
+                  </p>
+                ))}
             </footer>
           </div>
         </div>
@@ -271,12 +397,12 @@ const TVGas = () => {
               </span>
             </header>
             <div className="card-content  pl-6">
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label"></label>
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label"></label>
                 </div>
-                <div class="field-body">
-                  <div class="field">
+                <div className="field-body">
+                  <div className="field">
                     {report
                       .filter(({ id }) => id === 2)
                       .map((item) => (
@@ -288,9 +414,9 @@ const TVGas = () => {
                         </div>
                       ))}
                   </div>
-                  <div class="field">
-                    <p class="control is-expanded has-icons-left has-icons-right pt-2">
-                      <p>
+                  <div className="field">
+                    <div className="control is-expanded has-icons-left has-icons-right pt-2">
+                      <div>
                         <div className="vertical-progress-bar pt-5">
                           {report
                             .filter(({ id }) => id === 2)
@@ -309,14 +435,14 @@ const TVGas = () => {
                               </progress>
                             ))}
                         </div>
-                      </p>
-                      <span class="icon is-small is-left" />
-                      <i class="fas fa-envelope"></i>
+                      </div>
+                      <span className="icon is-small is-left" />
+                      <i className="fas fa-envelope"></i>
                       <span />
-                      <span class="icon is-small is-right">
-                        <i class="fas fa-check"></i>
+                      <span className="icon is-small is-right">
+                        <i className="fas fa-check"></i>
                       </span>
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -330,7 +456,7 @@ const TVGas = () => {
                   </p>
                 ))}
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                TONAGE = TON
+                TONAGE = {totalChargingStriko2} Kg
               </p>
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
                 CONS = 0 M³/Ton
@@ -351,12 +477,12 @@ const TVGas = () => {
               </span>
             </header>
             <div className="card-content  pl-6">
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label"></label>
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label"></label>
                 </div>
-                <div class="field-body">
-                  <div class="field">
+                <div className="field-body">
+                  <div className="field">
                     {report
                       .filter(({ id }) => id === 3)
                       .map((item) => (
@@ -368,9 +494,9 @@ const TVGas = () => {
                         </div>
                       ))}
                   </div>
-                  <div class="field">
-                    <p class="control is-expanded has-icons-left has-icons-right pt-2">
-                      <p>
+                  <div className="field">
+                    <div className="control is-expanded has-icons-left has-icons-right pt-2">
+                      <div>
                         <div className="vertical-progress-bar pt-5">
                           {report
                             .filter(({ id }) => id === 3)
@@ -389,14 +515,14 @@ const TVGas = () => {
                               </progress>
                             ))}
                         </div>
-                      </p>
-                      <span class="icon is-small is-left" />
-                      <i class="fas fa-envelope"></i>
+                      </div>
+                      <span className="icon is-small is-left" />
+                      <i className="fas fa-envelope"></i>
                       <span />
-                      <span class="icon is-small is-right">
-                        <i class="fas fa-check"></i>
+                      <span className="icon is-small is-right">
+                        <i className="fas fa-check"></i>
                       </span>
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -410,7 +536,7 @@ const TVGas = () => {
                   </p>
                 ))}
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                TONAGE = TON
+                TONAGE = {totalChargingStriko3} Kg
               </p>
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
                 CONS = 0 M³/Ton
@@ -429,12 +555,12 @@ const TVGas = () => {
               </span>
             </header>
             <div className="card-content  pl-6">
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label"></label>
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label"></label>
                 </div>
-                <div class="field-body">
-                  <div class="field">
+                <div className="field-body">
+                  <div className="field">
                     {report
                       .filter(({ id }) => id === 4)
                       .map((item) => (
@@ -446,9 +572,9 @@ const TVGas = () => {
                         </div>
                       ))}
                   </div>
-                  <div class="field">
-                    <p class="control is-expanded has-icons-left has-icons-right pt-2">
-                      <p>
+                  <div className="field">
+                    <div className="control is-expanded has-icons-left has-icons-right pt-2">
+                      <div>
                         <div className="vertical-progress-bar pt-5">
                           {report
                             .filter(({ id }) => id === 4)
@@ -467,14 +593,14 @@ const TVGas = () => {
                               </progress>
                             ))}
                         </div>
-                      </p>
-                      <span class="icon is-small is-left" />
-                      <i class="fas fa-envelope"></i>
+                      </div>
+                      <span className="icon is-small is-left" />
+                      <i className="fas fa-envelope"></i>
                       <span />
-                      <span class="icon is-small is-right">
-                        <i class="fas fa-check"></i>
+                      <span className="icon is-small is-right">
+                        <i className="fas fa-check"></i>
                       </span>
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -488,7 +614,7 @@ const TVGas = () => {
                   </p>
                 ))}
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                TONAGE = TON
+                TONAGE = {totalChargingSwiftAsia} Kg
               </p>
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
                 CONS = 0 M³/Ton

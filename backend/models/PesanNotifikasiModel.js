@@ -5,7 +5,7 @@ const { DataTypes } = Sequelize;
 
 // Define schema
 const Report = db.define(
-  "notifikasi",
+  "db_notifikasi",
   {
     // Define attributes
 

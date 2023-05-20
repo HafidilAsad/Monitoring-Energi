@@ -4,7 +4,7 @@ import db from "../config/DatabaseGas.js";
 const { DataTypes } = Sequelize;
 
 const Striko1 = db.define(
-  "monitoring_gas30",
+  "db_realtime_monitoring_gas",
   {
     nama_mesin: DataTypes.STRING,
     gas_used: DataTypes.STRING,

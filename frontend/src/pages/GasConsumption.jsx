@@ -139,11 +139,7 @@ const GasConsumption = () => {
 
   return (
     <LayoutGas>
-      <nav
-        className="navbar is-info "
-        role="navigation"
-        aria-label="main navigation"
-      >
+      <nav className="level is-info navbar">
         <div className="navbar-brand">
           <a
             href="/"
@@ -165,43 +161,26 @@ const GasConsumption = () => {
           </button>
         </div>
 
-        <div className="navbar-brand pl-5 has-text-centered">
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item has-text-centered">
-            <span
-              className="has-text-centered is-flex justify-content-center ml-5 has-text-weight-bold is-family-sans-serif"
-              style={{ fontSize: "20px" }}
-            >
-              MONITORING GAS LNG
-            </span>
-          </div>
-        </div>
+        <p
+          className="level-item has-text-centered has-text-centered is-flex justify-content-center  has-text-weight-bold is-family-sans-serif"
+          style={{ fontSize: "20px" }}
+        >
+          MONITORING GAS LNG
+        </p>
 
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="field is-grouped">
               <div className="control">
-                <p className="button is-info" href="">
+                <div className="button is-info" href="">
                   <CurrentDate />
-                </p>
+                </div>
               </div>
-              <p className="control">
-                <p className="button is-info" href="">
+              <div className="control">
+                <div className="button is-info" href="">
                   <Clock />
-                </p>
-              </p>
+                </div>
+              </div>
 
               <div className="icon pt-5" onClick={handleClick}>
                 <IoNotificationsOutline
@@ -299,9 +278,11 @@ const GasConsumption = () => {
                   .sort((a, b) => b.id - a.id) // sort by id in descending order
                   .map((pesan, index) => (
                     <tr key={pesan.id}>
-                      <td>{index + 1}</td>
-                      <td>{pesan.pesan_notifikasi}</td>
-                      <td>
+                      <td className="has-text-weight-semibold">{index + 1}</td>
+                      <td className="has-text-weight-semibold">
+                        {pesan.pesan_notifikasi}
+                      </td>
+                      <td className="has-text-weight-semibold">
                         {new Date(pesan.createdAt).toLocaleDateString("en-GB")}
                       </td>
                       <td>
@@ -310,6 +291,7 @@ const GasConsumption = () => {
                             type="checkbox"
                             checked={false} // Replace with the corresponding checked state of the notification
                             onChange={() => handleCheckboxChange(pesan.id)}
+                            className="has-text-weight-semibold"
                           />
                           Rec
                         </label>

@@ -7,9 +7,13 @@ import ChartCostGas from "../components/ChartCostGas";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { IoNotificationsOutline } from "react-icons/io5";
 const TotalGas = () => {
   const [consumpperbulanini, setConsumptionperbulanini] = useState(0);
   const [consumpperbulaniniton, setConsumptionperbulaniniton] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [badgeNumber, setBadgeNumber] = useState(1);
+  const [pesanNotifikasi, setPesanNotifikasi] = useState([]);
 
   //Ambil data perbulan ini Striko 1
   useEffect(() => {
@@ -34,13 +38,35 @@ const TotalGas = () => {
         console.error(error);
       });
   });
+
+  //untuk Fungsi Notifikasi
+
+  useEffect(() => {
+    getPesanNotifikasi();
+  });
+
+  const getPesanNotifikasi = async () => {
+    const response = await axios.get("http://localhost:5000/pesannotifikasi");
+    setPesanNotifikasi(response.data);
+  };
+
+  function handleClick() {
+    setShowModal(!showModal);
+    setBadgeNumber(0);
+  }
+
+  const handleCheckboxChange = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/pesannotifikasi/${id}`);
+      getPesanNotifikasi(); // Fetch updated notifications after deletion
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <LayoutGas>
-      <nav
-        className="navbar is-info "
-        role="navigation"
-        aria-label="main navigation"
-      >
+      <nav className="level is-info navbar">
         <div className="navbar-brand">
           <a
             href="/"
@@ -62,43 +88,33 @@ const TotalGas = () => {
           </button>
         </div>
 
-        <div className="navbar-brand pl-5 has-text-centered">
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item"></div>
-          <div className="navbar-item has-text-centered">
-            <span
-              className="has-text-centered is-flex justify-content-center ml-5 has-text-weight-bold is-family-sans-serif"
-              style={{ fontSize: "20px" }}
-            >
-              MONITORING GAS LNG
-            </span>
-          </div>
-        </div>
+        <p
+          className="level-item has-text-centered has-text-centered is-flex justify-content-center  has-text-weight-bold is-family-sans-serif"
+          style={{ fontSize: "20px" }}
+        >
+          MONITORING GAS LNG
+        </p>
 
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="field is-grouped">
               <div className="control">
-                <a className="button is-info" href="">
+                <div className="button is-info" href="">
                   <CurrentDate />
-                </a>
+                </div>
               </div>
-              <p className="control">
-                <a className="button is-info" href="">
+              <div className="control">
+                <div className="button is-info" href="">
                   <Clock />
-                </a>
-              </p>
+                </div>
+              </div>
+
+              <div className="icon pt-5" onClick={handleClick}>
+                <IoNotificationsOutline
+                  style={{ width: "25px", height: "25px" }}
+                />
+                <span className="topIconBadge">{badgeNumber}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -163,6 +179,60 @@ const TotalGas = () => {
           </div>
         </div>
       </nav>
+      <div className={`modal  ${showModal ? "is-active " : ""}`}>
+        <div className="modal-background"></div>
+        <div className="modal-card ">
+          <header className="modal-card-head is-fullwidth">
+            <p className="modal-card-title">Notification</p>
+            <button
+              className="delete"
+              aria-label="close"
+              onClick={handleClick}
+            ></button>
+          </header>
+          <section className="modal-card-body">
+            <table className="table is-stripped is-fullwidth">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Pesan Notifikasi</th>
+                  <th>Tanggal</th>
+                  <th>Ack</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pesanNotifikasi
+                  .sort((a, b) => b.id - a.id) // sort by id in descending order
+                  .map((pesan, index) => (
+                    <tr key={pesan.id}>
+                      <td>{index + 1}</td>
+                      <td>{pesan.pesan_notifikasi}</td>
+                      <td>
+                        {new Date(pesan.createdAt).toLocaleDateString("en-GB")}
+                      </td>
+                      <td>
+                        <label className="checkbox">
+                          <input
+                            type="checkbox"
+                            checked={false} // Replace with the corresponding checked state of the notification
+                            onChange={() => handleCheckboxChange(pesan.id)}
+                          />
+                          Rec
+                        </label>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </section>
+          <footer className="modal-card-foot">
+            <button className="button is-info">Ok</button>
+            <button className="button" onClick={handleClick}>
+              Cancel
+            </button>
+          </footer>
+        </div>
+      </div>
       <div className="columns m-1">
         <div className="column">
           <div className="card">
