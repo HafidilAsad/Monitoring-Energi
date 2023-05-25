@@ -59,7 +59,7 @@ const ChartStriko1 = () => {
         />
         <YAxis type="number" domain={["auto", "auto"]}>
           <Label
-            value="Value M³"
+            value="Value m³"
             angle={-90}
             position="insideLeft"
             style={{ textAnchor: "middle" }}

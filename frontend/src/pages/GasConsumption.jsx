@@ -192,7 +192,7 @@ const GasConsumption = () => {
           </div>
         </div>
       </nav>
-      <nav className="navbar has-background-light">
+      <nav className="navbar has-background-light custom-padding">
         <div className="navbar-brand">
           <p className="navbar-item has-text-weight-bold has-text-underlined is-size-4">
             STRIKO 1
@@ -313,7 +313,7 @@ const GasConsumption = () => {
       <div className="columns m-1 ">
         <div className="column is-half has-background-white  ">
           <h1 className="subtitle has-text-centered has-text-weight-semibold is-family-sans-serif">
-            Graphic Gas Consumption M³/Ton
+            Graphic Gas Consumption m³/Ton
           </h1>
           <ChartStriko1ConsumptionPerTon />
         </div>
@@ -325,13 +325,13 @@ const GasConsumption = () => {
                 style={{ borderBottom: "5px solid #2986cc" }}
               >
                 <div className="card-header is-family-sans-serif pl-4">
-                  Yesterday M³/Ton
+                  Yesterday m³/Ton
                 </div>
                 <div className="card-content">
                   <div className="level">
                     <span className="has-text-centered has-text-weight-bold pt-4">
                       <br />
-                      {Yesterday} M³/Ton
+                      {Yesterday} m³/Ton
                     </span>
                     <div style={{ width: 70, height: 62 }}>
                       <CircularProgressbar
@@ -411,7 +411,7 @@ const GasConsumption = () => {
                 style={{ borderBottom: "5px solid #cc0033" }}
               >
                 <div className="card-header is-family-sans-serif pl-4">
-                  This Month M³
+                  This Month m³
                 </div>
                 <div className="card-content">
                   <progress
@@ -423,7 +423,7 @@ const GasConsumption = () => {
                   </progress>
 
                   <h1 className=" has-text-weight-bold ">
-                    {consumpperbulanini} M³
+                    {consumpperbulanini} m³
                   </h1>
                 </div>
               </div>
@@ -512,7 +512,7 @@ const GasConsumption = () => {
                 className="card "
                 style={{ borderBottom: "5px solid #ffff66" }}
               >
-                <div className="card-header pl-4">GAS USED TODAY (M³)</div>
+                <div className="card-header pl-4">GAS USED TODAY (m³)</div>
                 <div className="card-content">
                   {sensor
                     .filter(({ id }) => id === 1)
@@ -529,7 +529,7 @@ const GasConsumption = () => {
                     .filter(({ id }) => id === 1)
                     .map((item) => (
                       <h1 className="is-size-6 has-text-weight-bold">
-                        {item.gas_consumption - gas_kemarin} M³
+                        {item.gas_consumption - gas_kemarin} m³
                       </h1>
                     ))}
                 </div>
@@ -542,7 +542,7 @@ const GasConsumption = () => {
                 className="card "
                 style={{ borderBottom: "5px solid #cc0033" }}
               >
-                <div className="card-header pl-4">FLOW IN SENSOR (M³/h)</div>
+                <div className="card-header pl-4">FLOW IN SENSOR (m³/h)</div>
                 <div className="card-content">
                   {sensor
                     .filter(({ id }) => id === 1)
@@ -559,7 +559,7 @@ const GasConsumption = () => {
                     .filter(({ id }) => id === 1)
                     .map((item) => (
                       <h1 className="is-size-6 has-text-weight-bold">
-                        {item.gas_used} M³/h
+                        {item.gas_used} m³/h
                       </h1>
                     ))}
                 </div>
@@ -570,9 +570,7 @@ const GasConsumption = () => {
                 className="card "
                 style={{ borderBottom: "5px solid #4fa663" }}
               >
-                <div className="card-header pl-4">
-                  CONSUMPTION IN SENSOR (M³)
-                </div>
+                <div className="card-header pl-4">USED IN SENSOR (m³)</div>
                 <div className="card-content">
                   <div className="level">
                     {sensor
@@ -580,7 +578,7 @@ const GasConsumption = () => {
                       .map((item) => (
                         <span className="has-text-centered has-text-weight-bold pt-4">
                           <br />
-                          {item.gas_consumption} M³
+                          {item.gas_consumption} m³
                         </span>
                       ))}
                     <div style={{ width: 70, height: 62 }}>
@@ -614,7 +612,7 @@ const GasConsumption = () => {
         </div>
         <div className="column is-half has-background-white ">
           <h1 className="subtitle has-text-centered has-text-weight-semibold is-family-sans-serif">
-            Graphic Gas Consumption M³/day
+            Graphic Gas Used m³/day
           </h1>
           <ChartStriko1Consumption />
         </div>

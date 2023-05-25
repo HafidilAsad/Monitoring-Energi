@@ -73,7 +73,7 @@ app.listen(process.env.APP_PORT, () => {
   console.log("server up and running.... in port 5000");
 });
 
-const job = schedule.scheduleJob("45 15 * * *", async () => {
+const job = schedule.scheduleJob("49 7 * * *", async () => {
   let gas_kemarin = 0;
   try {
     const response = await axios.get("http://localhost:5000/akhirharikemarin");
@@ -96,15 +96,22 @@ const job = schedule.scheduleJob("45 15 * * *", async () => {
   const namaMesin = "Striko 1";
   let gasConsumption = 0;
   let roundedGasConsumption = 0;
+  let gasMmbtu = 0;
+  let gasCost = 0;
   if (totalChargingStriko1 !== 0) {
     gasConsumption = (gasUsed / totalChargingStriko1) * 1000; //ngambil API LHP Charging http://10.14.20.212:3551/api/lhpChargingSwiftAsia
     roundedGasConsumption = gasConsumption.toFixed(1);
   }
+  gasMmbtu = (gasUsed / 27.2203879834687).toFixed(1);
+  gasCost = (gasMmbtu * 10.03).toFixed(1);
 
   const data = {
     nama_mesin: namaMesin,
     gas_used: gasUsed,
     gas_consumption: roundedGasConsumption,
+    total_charging: totalChargingStriko1,
+    gas_mmbtu: gasMmbtu,
+    gas_cost: gasCost,
   };
 
   console.log(totalChargingStriko1);

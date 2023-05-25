@@ -157,7 +157,7 @@ const Gas = () => {
                   className="has-text-black  has-text-centered has-text-grey "
                   style={{ fontSize: "55px" }}
                 >
-                  {item.gas_used} <span className="is-size-3">M³/h</span>
+                  {item.gas_used} <span className="is-size-3">m³/h</span>
                 </h1>
               ))}
             <p
@@ -198,7 +198,7 @@ const Gas = () => {
                   .filter(({ id }) => id === 1)
                   .map((item) => (
                     <span className="is-block has-text-centered">
-                      USED = {item.gas_used} M³/h
+                      FLOW = {item.gas_used} m³/h
                     </span>
                   ))}
               </p>
@@ -215,7 +215,7 @@ const Gas = () => {
                   .filter(({ id }) => id === 1)
                   .map((item) => (
                     <span className="is-block has-text-centered">
-                      CONSUMPTION = {item.gas_consumption - gas_kemarin} M³
+                      USED = {item.gas_consumption - gas_kemarin} m³
                     </span>
                   ))}
               </p>
@@ -259,7 +259,7 @@ const Gas = () => {
               className="has-text-black  has-text-centered has-text-grey "
               style={{ fontSize: "55px" }}
             >
-              30 <span className="is-size-3">M³/h</span>
+              30 <span className="is-size-3">m³/h</span>
             </h1>
             <p
               className="has-text-centered has-text-grey is-size-7"
@@ -299,7 +299,7 @@ const Gas = () => {
                   .filter(({ id }) => id === 2)
                   .map((item) => (
                     <span className="is-block has-text-centered">
-                      USED = {item.gas_used} M³/h
+                      FLOW = {item.gas_used} m³/h
                     </span>
                   ))}
               </p>
@@ -316,7 +316,7 @@ const Gas = () => {
                   .filter(({ id }) => id === 2)
                   .map((item) => (
                     <span className="is-block has-text-centered">
-                      CONSUMPTION = {item.gas_consumption} M³
+                      USED = {item.gas_consumption} m³
                     </span>
                   ))}
               </p>
@@ -359,7 +359,7 @@ const Gas = () => {
               className="has-text-black  has-text-centered  has-text-grey "
               style={{ fontSize: "55px" }}
             >
-              35 <span className="is-size-3">M³/h</span>
+              35 <span className="is-size-3">m³/h</span>
             </h1>
             <p
               className="has-text-centered has-text-grey is-size-7"
@@ -399,7 +399,7 @@ const Gas = () => {
                   .filter(({ id }) => id === 3)
                   .map((item) => (
                     <span className="is-block has-text-centered">
-                      USED = {item.gas_used} M³/h
+                      FLOW = {item.gas_used} m³/h
                     </span>
                   ))}
               </p>
@@ -416,7 +416,7 @@ const Gas = () => {
                   .filter(({ id }) => id === 3)
                   .map((item) => (
                     <span className="is-block has-text-centered">
-                      CONSUMPTION = {item.gas_consumption} M³
+                      USED = {item.gas_consumption} m³
                     </span>
                   ))}
               </p>
@@ -459,7 +459,7 @@ const Gas = () => {
               className="has-text-black  has-text-centered  has-text-grey "
               style={{ fontSize: "55px" }}
             >
-              45 <span className="is-size-3">M³/h</span>
+              45 <span className="is-size-3">m³/h</span>
             </h1>
             <p
               className="has-text-centered has-text-grey is-size-7"
@@ -499,7 +499,7 @@ const Gas = () => {
                   .filter(({ id }) => id === 4)
                   .map((item) => (
                     <span className="is-block has-text-centered">
-                      USED = {item.gas_used} M³/h
+                      FLOW = {item.gas_used} m³/h
                     </span>
                   ))}
               </p>
@@ -516,7 +516,7 @@ const Gas = () => {
                   .filter(({ id }) => id === 4)
                   .map((item) => (
                     <span className="is-block has-text-centered">
-                      CONSUMPTION = {item.gas_consumption} M³
+                      USED = {item.gas_consumption} m³
                     </span>
                   ))}
               </p>

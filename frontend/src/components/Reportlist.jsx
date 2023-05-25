@@ -136,8 +136,9 @@ const Reportlist = () => {
             <tr>
               <th>No</th>
               <th>Nama Mesin</th>
-              <th>Gas Used</th>
-              <th>Gas Consumption</th>
+              <th>Gas Used (m³)</th>
+              <th>Gas Consumption (m³/Ton)</th>
+              <th>Total Charging (Kg)</th>
               <th>Tanggal</th>
             </tr>
           </thead>
@@ -151,7 +152,9 @@ const Reportlist = () => {
                     <td>{index + 1}</td>
                     <td>{report.nama_mesin}</td>
                     <td>{report.gas_used}</td>
+                    <td>{report.tottal_charging}</td>
                     <td>{report.gas_consumption}</td>
+
                     <td>
                       {date.toLocaleDateString("id-ID", {
                         day: "2-digit",

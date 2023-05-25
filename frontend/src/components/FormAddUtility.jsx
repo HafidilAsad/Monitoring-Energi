@@ -139,7 +139,7 @@ const FormAddUtility = () => {
               </div>
 
               <br />
-              <label className="label"> Air (M³)</label>
+              <label className="label"> Air (m³)</label>
               <div className="field-body">
                 <div className="field">
                   <label className="label"> Usage</label>

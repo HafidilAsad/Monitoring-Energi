@@ -17,22 +17,21 @@ const Report = db.define(
     gas_consumption: {
       type: DataTypes.DOUBLE,
     },
+    total_charging: {
+      type: DataTypes.DOUBLE,
+    },
+    gas_mmbtu: {
+      type: DataTypes.DOUBLE,
+    },
+    gas_cost: {
+      type: DataTypes.DOUBLE,
+    },
   },
   {
     // Freeze Table Name
     freezeTableName: true,
   }
 );
-
-// const Report = db.define('monitoring_gas',{
-//     nama_mesin: DataTypes.STRING,
-//     gas_used: DataTypes.STRING,
-//     gas_consumption: DataTypes.STRING,
-//     total_charging: DataTypes.STRING,
-//     tanggal: DataTypes.STRING
-// },{
-//     freezeTableName:true
-// });
 
 export default Report;
 

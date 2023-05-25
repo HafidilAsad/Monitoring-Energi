@@ -263,7 +263,7 @@ const TotalGas = () => {
                 {(consumpperbulanini / 27.3).toFixed(1)} mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                {consumpperbulaniniton.toFixed()} M³/Ton
+                {consumpperbulaniniton.toFixed()} m³/Ton
               </a>
             </footer>
           </div>
@@ -297,7 +297,7 @@ const TotalGas = () => {
                 mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                M³/Ton
+                m³/Ton
               </a>
             </footer>
           </div>
@@ -331,7 +331,7 @@ const TotalGas = () => {
                 0 mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                0 M³/Ton
+                0 m³/Ton
               </a>
             </footer>
           </div>
@@ -365,7 +365,7 @@ const TotalGas = () => {
                 0 mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                0 M³/Ton
+                0 m³/Ton
               </a>
             </footer>
           </div>
@@ -399,7 +399,7 @@ const TotalGas = () => {
                 0 mmbtu
               </a>
               <a href="#" className="card-footer-item">
-                0 M³/Ton
+                0 m³/Ton
               </a>
             </footer>
           </div>
@@ -438,7 +438,7 @@ const TotalGas = () => {
                     className="box  is-family-monospace  has-text-weight-bold"
                     style={{ borderLeft: "5px solid #2986cc" }}
                   >
-                    TOTAL :{" "}
+                    TOTAL COST:{" "}
                     {((consumpperbulanini / 27.2203879834687) * 9.6)
 
                       .toLocaleString("en-US", {
@@ -458,7 +458,7 @@ const TotalGas = () => {
                     className="box  is-family-monospace  has-text-weight-bold"
                     style={{ borderLeft: "5px solid #2986cc" }}
                   >
-                    -
+                    CHARGE : 0
                   </div>
                 </div>
               </div>

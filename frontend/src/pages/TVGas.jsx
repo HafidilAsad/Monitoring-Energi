@@ -7,6 +7,7 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import RunningText from "../components/RunningText";
 
 const TVGas = () => {
   //mengambil Tonase charging
@@ -321,7 +322,7 @@ const TVGas = () => {
                           className="has-text-grey is-family-monospace has-text-weight-bold"
                           style={{ fontSize: "70px" }}
                         >
-                          {item.gas_consumption - gas_kemarin} M³
+                          {item.gas_consumption - gas_kemarin} m³
                         </div>
                       ))}
                   </div>
@@ -364,25 +365,36 @@ const TVGas = () => {
                 .filter(({ id }) => id === 1)
                 .map((item) => (
                   <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                    FLOW = {item.gas_used} M³/h
+                    FLOW = {item.gas_used} m³/h
                   </p>
                 ))}
-              <p className="card-footer-item has-text-weight-bold has-text-grey ">
+              <p className="card-footer-item has-text-weight-bold has-text-grey">
                 TONAGE = {totalChargingStriko1} Kg
               </p>
-              {report
-                .filter(({ id }) => id === 1)
-                .map((item) => (
-                  <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                    CONS ={" "}
-                    {(
-                      ((item.gas_consumption - gas_kemarin) /
-                        totalChargingStriko1) *
-                      1000
-                    ).toFixed(1)}{" "}
-                    M³/Ton
-                  </p>
-                ))}
+              {/* <p className="card-footer-item has-text-weight-bold has-text-grey">
+                {totalChargingStriko1 !== 0
+                  ? `TONAGE = ${totalChargingStriko1} Kg`
+                  : "TONAGE = Belum Preparation"}
+              </p> */}
+              {totalChargingStriko1 !== 0 ? (
+                report
+                  .filter(({ id }) => id === 1)
+                  .map((item) => (
+                    <p className="card-footer-item has-text-weight-bold has-text-grey">
+                      CONS =
+                      {(
+                        ((item.gas_consumption - gas_kemarin) /
+                          totalChargingStriko1) *
+                        1000
+                      ).toFixed(1)}{" "}
+                      m³/Ton
+                    </p>
+                  ))
+              ) : (
+                <p className="card-footer-item has-text-weight-bold has-text-grey">
+                  CONS = Belum Preparation
+                </p>
+              )}
             </footer>
           </div>
         </div>
@@ -410,7 +422,7 @@ const TVGas = () => {
                           className="has-text-grey is-family-monospace has-text-weight-bold"
                           style={{ fontSize: "70px" }}
                         >
-                          {item.gas_consumption} M³
+                          {item.gas_consumption} m³
                         </div>
                       ))}
                   </div>
@@ -452,14 +464,14 @@ const TVGas = () => {
                 .filter(({ id }) => id === 2)
                 .map((item) => (
                   <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                    FLOW = {item.gas_used} M³/h
+                    FLOW = {item.gas_used} m³/h
                   </p>
                 ))}
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
                 TONAGE = {totalChargingStriko2} Kg
               </p>
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                CONS = 0 M³/Ton
+                CONS = 0 m³/Ton
               </p>
             </footer>
           </div>
@@ -490,7 +502,7 @@ const TVGas = () => {
                           className="has-text-grey is-family-monospace has-text-weight-bold"
                           style={{ fontSize: "70px" }}
                         >
-                          {item.gas_consumption} M³
+                          {item.gas_consumption} m³
                         </div>
                       ))}
                   </div>
@@ -532,14 +544,14 @@ const TVGas = () => {
                 .filter(({ id }) => id === 3)
                 .map((item) => (
                   <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                    FLOW = {item.gas_used} M³/h
+                    FLOW = {item.gas_used} m³/h
                   </p>
                 ))}
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
                 TONAGE = {totalChargingStriko3} Kg
               </p>
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                CONS = 0 M³/Ton
+                CONS = 0 m³/Ton
               </p>
             </footer>
           </div>
@@ -568,7 +580,7 @@ const TVGas = () => {
                           className="has-text-grey is-family-monospace has-text-weight-bold"
                           style={{ fontSize: "70px" }}
                         >
-                          {item.gas_consumption} M³
+                          {item.gas_consumption} m³
                         </div>
                       ))}
                   </div>
@@ -610,18 +622,24 @@ const TVGas = () => {
                 .filter(({ id }) => id === 4)
                 .map((item) => (
                   <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                    FLOW = {item.gas_used} M³/h
+                    FLOW = {item.gas_used} m³/h
                   </p>
                 ))}
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
                 TONAGE = {totalChargingSwiftAsia} Kg
               </p>
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                CONS = 0 M³/Ton
+                CONS = 0 m³/Ton
               </p>
             </footer>
           </div>
         </div>
+      </div>
+      <div
+        className=" has-background-white is-full-width has-text-weight-bold is-family-monospace"
+        style={{ borderBottom: "2px solid #2986cc" }}
+      >
+        <RunningText />
       </div>
     </LayoutTV>
   );
