@@ -8,6 +8,7 @@ import {
   createReportSekaliSehari,
   getReportConsumptKemarin,
   getReportperbulanini,
+  getReportperbulaniniswiftasia,
 } from "../controllers/ReportController.js";
 
 const router = express.Router();
@@ -20,11 +21,6 @@ router.delete("/reports/:id", deleteReport);
 router.post("/addreportsekalisehari", createReportSekaliSehari);
 router.get("/reportsconsumptkemarin", getReportConsumptKemarin);
 router.get("/reportsperbulanini", getReportperbulanini);
-
-// router.get('/users/:id', getUserById);
-// router.post('/users', createUser);
-// router.patch('/users/:id', updateUser);
-// router.delete('/users/:id', deleteUser);
-//router.post('/addcost', createCost);
+router.get("/reportsperbulaniniswiftasia", getReportperbulaniniswiftasia);
 
 export default router;

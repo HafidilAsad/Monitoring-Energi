@@ -5,7 +5,7 @@ import {
   createPesanNotifikasi,
   updatePesanNotifikasi,
   deletePesanNotifikasi,
-  // getPesanNotifikasikemarin,
+  getPesanNotifikasiKemarin,
 } from "../controllers/PesanNotifikasiController.js";
 
 const router = express.Router();
@@ -15,5 +15,5 @@ router.get("/pesannotifikasi/:id", getPesanNotifikasiById);
 router.post("/addpesannotifikasi", createPesanNotifikasi);
 router.patch("/pesannotifikasi/:id", updatePesanNotifikasi);
 router.delete("/pesannotifikasi/:id", deletePesanNotifikasi);
-//router.get("/pesannotifikasikemarin", getPesanNotifikasikemarin);
+router.get("/pesannotifikasikemarin", getPesanNotifikasiKemarin);
 export default router;

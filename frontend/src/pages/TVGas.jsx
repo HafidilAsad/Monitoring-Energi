@@ -548,7 +548,7 @@ const TVGas = () => {
                   </p>
                 ))}
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
-                TONAGE = {totalChargingStriko3} Kg
+                TONAGE = {totalChargingStriko3} kg
               </p>
               <p className="card-footer-item has-text-weight-bold has-text-grey ">
                 CONS = 0 m³/Ton

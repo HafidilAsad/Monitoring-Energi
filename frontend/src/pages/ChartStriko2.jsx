@@ -48,7 +48,7 @@ const ChartStriko2 = () => {
   }, []);
 
   return (
-    <ResponsiveContainer width="100%" height={100} aspect={6 / 1}>
+    <ResponsiveContainer width="100%" height={150} aspect={6 / 1}>
       <LineChart
         width={600}
         height={300}

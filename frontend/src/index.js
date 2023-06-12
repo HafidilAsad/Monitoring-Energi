@@ -5,7 +5,7 @@ import { store } from "./app/store";
 import App from "./App";
 import "bulma/css/bulma.css";
 import "bulma-calendar/dist/css/bulma-calendar.min.css";
-
+import "antd/dist/reset.css";
 import axios from "axios";
 
 axios.defaults.withCredentials = false;

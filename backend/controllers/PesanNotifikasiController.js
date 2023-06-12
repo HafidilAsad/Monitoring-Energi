@@ -1,4 +1,29 @@
 import PesanNotifikasi from "../models/PesanNotifikasiModel.js";
+import { Op } from "sequelize";
+
+//Pengambilan data kemarin
+export const getPesanNotifikasiKemarin = async (req, res) => {
+  try {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const response = await PesanNotifikasi.findAll({
+      attributes: ["id", "pesan_notifikasi", "createdAt", "updatedAt"],
+      where: {
+        updatedAt: {
+          [Op.gte]: yesterday,
+          [Op.lt]: today,
+        },
+      },
+    });
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Failed to fetch pesan notifikasi" });
+  }
+};
 
 export const createPesanNotifikasi = async (req, res) => {
   try {

@@ -13,7 +13,10 @@ const RunningText = () => {
 
   return (
     <div className="running-text-container">
-      <div className="running-text" ref={runningTextRef}>
+      <div
+        className="running-text is-size-5 is-family-monospace"
+        ref={runningTextRef}
+      >
         REALTIME DATA MONITORING GAS LNG © BY PE DIGITALISASI
       </div>
     </div>

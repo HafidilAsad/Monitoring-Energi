@@ -8,12 +8,45 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { IoNotificationsOutline } from "react-icons/io5";
+
 const TotalGas = () => {
   const [consumpperbulanini, setConsumptionperbulanini] = useState(0);
+  const [consumpperbulaniniswiftasia, setConsumptionperbulaniniswiftasia] =
+    useState(0);
   const [consumpperbulaniniton, setConsumptionperbulaniniton] = useState(0);
+  const [
+    consumpperbulaninitonswiftasia,
+    setConsumptionperbulaninitonswiftasia,
+  ] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [badgeNumber, setBadgeNumber] = useState(1);
   const [pesanNotifikasi, setPesanNotifikasi] = useState([]);
+
+  //Ambil data perbulan ini swiftasia
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/reportsperbulaniniswiftasia")
+      .then((response) => {
+        setConsumptionperbulaniniswiftasia(response.data.gasConsumptionSum);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+
+  //Ambil data perbulan ini Swiftasia
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/reportsperbulaniniswiftasia")
+      .then((response) => {
+        setConsumptionperbulaninitonswiftasia(
+          response.data.gasConsumptionSumTon
+        );
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 
   //Ambil data perbulan ini Striko 1
   useEffect(() => {
@@ -64,17 +97,27 @@ const TotalGas = () => {
     }
   };
 
+  var mmbtuStriko1 = consumpperbulanini / 27.3;
+  var mmbtuSwiftAsia = consumpperbulaniniswiftasia / 27.3;
+  var totalMmbtu = (mmbtuStriko1 + mmbtuSwiftAsia).toFixed(1);
+  var totalUsed = consumpperbulanini + consumpperbulaniniswiftasia;
+  var percentageStriko1 = ((consumpperbulanini / totalUsed) * 100).toFixed();
+  var percentageSwiftasia = (
+    (consumpperbulaniniswiftasia / totalUsed) *
+    100
+  ).toFixed();
+
   return (
     <LayoutGas>
       <nav className="level is-info navbar">
         <div className="navbar-brand">
-          <a
+          <p
             href="/"
             className="navbar-item has-background-white"
             style={{ borderRadius: "0.9rem" }}
           >
             <img src={logo} width="112" height="28" alt="" />
-          </a>
+          </p>
 
           <button
             className="navbar-burger"
@@ -119,10 +162,10 @@ const TotalGas = () => {
           </div>
         </div>
       </nav>
-      <nav className="navbar has-background-light">
+      <nav className="navbar has-background-light custom-padding">
         <div className="navbar-brand">
           <p className="navbar-item has-text-weight-bold has-text-underlined is-size-4">
-            TOTAL
+            TOTAL GAS
           </p>
         </div>
         <div className="navbar-menu">
@@ -178,7 +221,7 @@ const TotalGas = () => {
             </div>
           </div>
         </div>
-      </nav>
+      </nav>{" "}
       <div className={`modal  ${showModal ? "is-active " : ""}`}>
         <div className="modal-background"></div>
         <div className="modal-card ">
@@ -254,17 +297,17 @@ const TotalGas = () => {
                 className="content is-size-4   has-text-grey is-family-primary "
                 style={{ fontWeight: 1000 }}
               >
-                100%
+                {percentageStriko1}%
                 <br />
               </div>
             </div>
             <footer className="card-footer">
-              <a href="#" className="card-footer-item">
+              <p href="#" className="card-footer-item">
                 {(consumpperbulanini / 27.3).toFixed(1)} mmbtu
-              </a>
-              <a href="#" className="card-footer-item">
+              </p>
+              <p href="#" className="card-footer-item">
                 {consumpperbulaniniton.toFixed()} m³/Ton
-              </a>
+              </p>
             </footer>
           </div>
         </div>
@@ -293,12 +336,12 @@ const TotalGas = () => {
               </div>
             </div>
             <footer className="card-footer">
-              <a href="#" className="card-footer-item">
-                mmbtu
-              </a>
-              <a href="#" className="card-footer-item">
-                m³/Ton
-              </a>
+              <p href="#" className="card-footer-item">
+                0 mmbtu
+              </p>
+              <p href="#" className="card-footer-item">
+                0 m³/Ton
+              </p>
             </footer>
           </div>
         </div>
@@ -327,12 +370,12 @@ const TotalGas = () => {
               </div>
             </div>
             <footer className="card-footer">
-              <a href="#" className="card-footer-item">
+              <p href="#" className="card-footer-item">
                 0 mmbtu
-              </a>
-              <a href="#" className="card-footer-item">
+              </p>
+              <p href="#" className="card-footer-item">
                 0 m³/Ton
-              </a>
+              </p>
             </footer>
           </div>
         </div>
@@ -356,17 +399,17 @@ const TotalGas = () => {
                 className="content is-size-4   has-text-grey is-family-primary "
                 style={{ fontWeight: 1000 }}
               >
-                0%
+                {percentageSwiftasia}%
                 <br />
               </div>
             </div>
             <footer className="card-footer">
-              <a href="#" className="card-footer-item">
-                0 mmbtu
-              </a>
-              <a href="#" className="card-footer-item">
-                0 m³/Ton
-              </a>
+              <p href="#" className="card-footer-item">
+                {(consumpperbulaniniswiftasia / 27.3).toFixed(1)} mmbtu
+              </p>
+              <p href="#" className="card-footer-item">
+                {consumpperbulaninitonswiftasia.toFixed()} m³/Ton
+              </p>
             </footer>
           </div>
         </div>
@@ -395,12 +438,12 @@ const TotalGas = () => {
               </div>
             </div>
             <footer className="card-footer">
-              <a href="#" className="card-footer-item">
+              <p href="#" className="card-footer-item">
                 0 mmbtu
-              </a>
-              <a href="#" className="card-footer-item">
+              </p>
+              <p href="#" className="card-footer-item">
                 0 m³/Ton
-              </a>
+              </p>
             </footer>
           </div>
         </div>
@@ -432,14 +475,14 @@ const TotalGas = () => {
                     className="box  is-family-monospace  has-text-weight-bold"
                     style={{ borderLeft: "5px solid #2986cc" }}
                   >
-                    TOTAL (mmbtu) : {(consumpperbulanini / 27.3).toFixed(1)}
+                    TOTAL (mmbtu) : {totalMmbtu}
                   </div>
                   <div
                     className="box  is-family-monospace  has-text-weight-bold"
                     style={{ borderLeft: "5px solid #2986cc" }}
                   >
                     TOTAL COST:{" "}
-                    {((consumpperbulanini / 27.2203879834687) * 9.6)
+                    {(totalMmbtu * 10.03)
 
                       .toLocaleString("en-US", {
                         style: "currency",

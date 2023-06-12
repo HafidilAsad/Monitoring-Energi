@@ -23,6 +23,10 @@ import Reportgas from "./pages/Reportgas";
 import TotalGas from "./pages/TotalGas";
 import TVGas from "./pages/TVGas";
 import FiveMinutes from "./pages/fiveminutes";
+import TVMelting from "./pages/TVMelting";
+import GasListrik from "./pages/GasListrik";
+import Mc57 from "./pages/Mc57";
+import Report57 from "./pages/Report57";
 
 // import { useState  } from "react";
 // import { Data } from "../utils/Data";
@@ -68,6 +72,10 @@ function App() {
           <Route path="/totalgas" element={<TotalGas />} />
           <Route path="/tvgas" element={<TVGas />} />
           <Route path="/fiveminutes" element={<FiveMinutes />} />
+          <Route path="/tvmelting" element={<TVMelting />} />
+          <Route path="/gaslistrik" element={<GasListrik />} />
+          <Route path="/mc57" element={<Mc57 />} />
+          <Route path="/report57" element={<Report57 />} />
         </Routes>
       </BrowserRouter>
     </div>
