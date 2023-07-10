@@ -20,6 +20,8 @@ import AkhirHariStriko2 from "./routes/AkhirHariStriko2.js";
 import AkhirHariStriko3 from "./routes/AkhirHariStriko3.js";
 import AkhirHariSwiftAsia from "./routes/AkhirHariSwiftAsia.js";
 import PesanNotifikasi from "./routes/PesanNotifikasi.js";
+import Henkaten from "./routes/Henkaten.js";
+import Attendance from "./routes/Attendance.js";
 import cron from "node-cron";
 import axios from "axios";
 import schedule from "node-schedule";
@@ -80,6 +82,8 @@ app.use(AkhirHariStriko2);
 app.use(AkhirHariStriko3);
 app.use(AkhirHariSwiftAsia);
 app.use(PesanNotifikasi);
+app.use(Henkaten);
+app.use(Attendance);
 
 //store.sync();
 

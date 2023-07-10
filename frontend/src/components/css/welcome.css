@@ -39,3 +39,7 @@
   border-radius: 50%;
   animation: blinker 3.75s linear infinite;
 }
+
+.button-border {
+  border-bottom: 5px solid red;
+}

@@ -106,7 +106,7 @@ const GasConsumption = () => {
     0
   ).getDate();
   const percentagedate = Math.round((now.getDate() / daysInMonth) * 100);
-  const percentage = 25;
+  const percentage = 700;
 
   ////================== fungsi untuk notifikasi ===============================================
 
@@ -335,8 +335,8 @@ const GasConsumption = () => {
                     </span>
                     <div style={{ width: 70, height: 62 }}>
                       <CircularProgressbar
-                        value={percentage}
-                        text={`${percentage}%`}
+                        value={(percentage / 1000) * 100}
+                        text={`${percentage} A`}
                         styles={{
                           path: {
                             stroke: "#17a2b8", // change to info color

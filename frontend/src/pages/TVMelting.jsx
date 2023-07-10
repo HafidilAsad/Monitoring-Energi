@@ -239,8 +239,11 @@ const TVMelting = () => {
 
   const [chartMachine, setChartMachine] = useState("Striko1");
 
+  const [selectedButton, setSelectedButton] = useState("Striko1");
+
   const handleButtonClick = (type) => {
     setChartMachine(type);
+    setSelectedButton(type);
   };
 
   useEffect(() => {
@@ -552,25 +555,35 @@ const TVMelting = () => {
                     <div className="group">
                       <div className="buttons">
                         <button
-                          className="button is-small is-primary"
+                          className={`button is-small is-primary${
+                            selectedButton === "Striko1" ? " button-border" : ""
+                          }`}
                           onClick={() => handleButtonClick("Striko1")}
                         >
                           Striko 1
                         </button>
                         <button
-                          className=" button is-small is-primary"
-                          onClick={() => handleButtonClick("SwiftAsia")}
+                          className={`button is-small is-primary${
+                            selectedButton === "Striko2" ? " button-border" : ""
+                          }`}
+                          onClick={() => handleButtonClick("Striko2")}
                         >
                           Striko 2
                         </button>
                         <button
-                          className=" button is-small is-primary"
-                          onClick={() => handleButtonClick("Striko1")}
+                          className={`button is-small is-primary${
+                            selectedButton === "Striko3" ? " button-border" : ""
+                          }`}
+                          onClick={() => handleButtonClick("Striko3")}
                         >
                           Striko 3
                         </button>
                         <button
-                          className=" button is-small is-primary"
+                          className={`button is-small is-primary${
+                            selectedButton === "SwiftAsia"
+                              ? " button-border"
+                              : ""
+                          }`}
                           onClick={() => handleButtonClick("SwiftAsia")}
                         >
                           Swift Asia
